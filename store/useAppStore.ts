@@ -455,7 +455,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     set({ trainers: updatedTrainers });
   },
   
-  // バッジ関連
+  // Badge related
   completeWorkout: () => {
     const { badges, selectedTrainerId } = get();
     const today = new Date().toISOString().split('T')[0];
