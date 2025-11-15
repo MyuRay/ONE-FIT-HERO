@@ -40,5 +40,6 @@ contracts/Move.lock
 
 # Sui CLI config
 sui_data/
+.sui_config/
 
 
