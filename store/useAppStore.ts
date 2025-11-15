@@ -689,11 +689,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
       };
       set({ badges: [...badges, newBadge], todayBadgeCompleted: true });
       
-      // 条件達成バッジをチェック
+      // Check achievement badges
       get().checkAchievementBadges();
     }
     
-    // トークンを追加
+    // Add tokens
     set({
       trainers: updatedTrainers,
       workoutSessions: [...workoutSessions, session],
@@ -703,10 +703,10 @@ export const useAppStore = create<AppStore>((set, get) => ({
       },
     });
     
-    // ランキングを更新
+    // Update rankings
     get().updateRankings();
     
-    // ランキング更新後、条件達成バッジをチェック（チャンピオンバッジ用）
+    // After ranking update, check achievement badges (for champion badge)
     get().checkAchievementBadges();
   },
   
