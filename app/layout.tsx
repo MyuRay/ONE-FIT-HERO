@@ -7,8 +7,8 @@ import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ONE FIT HERO - バーチャルフィットネス × 育成ゲーム",
-  description: "ONE Championshipのファイターをトレーナーとして起用するバーチャルフィットネス × 育成ゲーム",
+  title: "ONE FIT HERO - Virtual Fitness × Training Game",
+  description: "Virtual fitness × training game featuring ONE Championship fighters as trainers",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="en">
       <body className={inter.className}>
         <WalletProvider>
           {children}

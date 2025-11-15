@@ -15,29 +15,29 @@ import {
 export const DEFAULT_USER_ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
 
 interface AppStore extends AppState {
-  // ウォレット関連
+  // Wallet related
   setAddress: (address: string | null) => void;
   connectWallet: () => void;
   disconnectWallet: () => void;
   
-  // Trainer関連
+  // Trainer related
   setSelectedTrainer: (trainerId: string) => void;
   increaseTrainerStats: (trainerId: string) => void;
   
-  // バッジ関連
+  // Badge related
   completeWorkout: () => void;
   getTodayBadge: () => WorkoutBadge | null;
   getTotalBadges: () => number;
   checkAchievementBadges: () => void;
   checkBadgeCondition: (badgeId: string) => boolean;
   
-  // ランキング関連
+  // Ranking related
   updateRankings: () => void;
   
-  // Prize Ticket関連
+  // Prize Ticket related
   checkPrizeTicket: (address: string) => boolean;
   
-  // トレーニング関連
+  // Training related
   completeWorkoutSession: (
     trainerId: string,
     difficulty: WorkoutDifficulty,
@@ -46,17 +46,17 @@ interface AppStore extends AppState {
     workoutDurationMinutes: number
   ) => void;
   
-  // トークン関連
+  // Token related
   getTokenAmount: () => number;
   addTokens: (amount: number) => void;
   spendTokens: (amount: number) => boolean;
   
-  // 交換関連
+  // Exchange related
   exchangeItem: (itemId: string) => boolean;
   getExchangeHistory: () => ExchangeHistory[];
 }
 
-// 初期Trainerデータ（モック）
+// Initial Trainer data (mock)
 const initialTrainers: Trainer[] = [
   {
     id: 'trainer-1',
@@ -64,10 +64,10 @@ const initialTrainers: Trainer[] = [
     power: 85,
     spirit: 90,
     flexibility: 75,
-    description: 'ムエタイの王者。パワーとスピリットに優れる。',
+    description: 'Muay Thai champion. Excels in power and spirit.',
     image: '/rodtang.webp',
-    userScore: 15230, // モックデータ
-    trainerScore: 18500, // モックデータ
+    userScore: 15230, // Mock data
+    trainerScore: 18500, // Mock data
   },
   {
     id: 'trainer-2',
@@ -75,10 +75,10 @@ const initialTrainers: Trainer[] = [
     power: 80,
     spirit: 95,
     flexibility: 85,
-    description: '総合格闘技のチャンピオン。バランスの取れた能力を持つ。',
+    description: 'MMA champion. Has well-balanced abilities.',
     image: '/angela-lee.jpg',
-    userScore: 12850, // モックデータ
-    trainerScore: 16200, // モックデータ
+    userScore: 12850, // Mock data
+    trainerScore: 16200, // Mock data
   },
   {
     id: 'trainer-3',
@@ -86,151 +86,151 @@ const initialTrainers: Trainer[] = [
     power: 75,
     spirit: 100,
     flexibility: 80,
-    description: 'ONE Championship創設者。スピリットが極めて高い。',
+    description: 'Founder of ONE Championship. Has extremely high spirit.',
     image: '/chatri.jpeg',
-    userScore: 9800, // モックデータ
-    trainerScore: 14500, // モックデータ
+    userScore: 9800, // Mock data
+    trainerScore: 14500, // Mock data
   },
 ];
 
-// 交換可能アイテム（抽選券と商品）
+// Exchangeable items (lottery tickets and goods)
 const initialExchangeItems: ExchangeItem[] = [
-  // 抽選券
+  // Lottery tickets
   {
     id: 'lottery-1',
-    name: 'ONE Championship 観戦チケット 抽選券',
-    description: '次回大会の観戦チケット抽選に参加',
+    name: 'ONE Championship Event Ticket Lottery',
+    description: 'Participate in the lottery for the next event ticket',
     type: 'lottery_ticket',
     tokenCost: 10000,
     available: true,
   },
   {
     id: 'lottery-2',
-    name: 'バックステージパス 抽選券',
-    description: '選手との交流イベント参加抽選',
+    name: 'Backstage Pass Lottery',
+    description: 'Participate in the lottery for athlete meet & greet event',
     type: 'lottery_ticket',
     tokenCost: 15000,
     available: true,
   },
   {
     id: 'lottery-3',
-    name: 'ONE Championship 公式Tシャツ 抽選券',
-    description: '限定デザインの公式Tシャツ抽選に参加',
+    name: 'ONE Championship Official T-shirt Lottery',
+    description: 'Participate in the lottery for limited edition official T-shirt',
     type: 'lottery_ticket',
     tokenCost: 5000,
     available: true,
   },
   {
     id: 'lottery-4',
-    name: 'トレーニンググローブ 抽選券',
-    description: 'プロ仕様のトレーニンググローブ抽選に参加',
+    name: 'Training Gloves Lottery',
+    description: 'Participate in the lottery for professional training gloves',
     type: 'lottery_ticket',
     tokenCost: 3000,
     available: true,
   },
   {
     id: 'lottery-5',
-    name: 'PPV 抽選券',
-    description: 'PPV参加抽選',
+    name: 'PPV Lottery',
+    description: 'Participate in the lottery for PPV access',
     type: 'lottery_ticket',
     tokenCost: 8000,
     available: true,
   },
-  // 商品（スポンサー割引券など）
+  // Goods (sponsor discount coupons, etc.)
   {
     id: 'goods-1',
-    name: 'スポンサーA ジム利用券 20%OFF',
-    description: '指定ジムチェーンで利用可能な20%割引券',
+    name: 'Sponsor A Gym Pass 20% OFF',
+    description: '20% discount coupon valid at designated gym chains',
     type: 'goods',
     tokenCost: 8000,
     available: true,
   },
   {
     id: 'goods-2',
-    name: 'スポンサーB サプリメント 割引券 15%OFF',
-    description: 'プロテイン・サプリメント購入時に15%割引',
+    name: 'Sponsor B Supplement Discount 15% OFF',
+    description: '15% discount on protein and supplement purchases',
     type: 'goods',
     tokenCost: 6000,
     available: true,
   },
   {
     id: 'goods-3',
-    name: 'スポンサーC スポーツウェア 割引券 25%OFF',
-    description: 'スポーツウェアブランドで25%割引',
+    name: 'Sponsor C Sportswear Discount 25% OFF',
+    description: '25% discount at sportswear brand stores',
     type: 'goods',
     tokenCost: 10000,
     available: true,
   },
   {
     id: 'goods-4',
-    name: 'ONE Championship 公式タオル',
-    description: 'ONE Championship公式ブランドのプレミアムタオル',
+    name: 'ONE Championship Official Towel',
+    description: 'Premium towel from ONE Championship official brand',
     type: 'goods',
     tokenCost: 3500,
     available: true,
   },
   {
     id: 'goods-5',
-    name: 'ONE Championship 公式マグカップ',
-    description: '限定デザインのONE Championshipマグカップ',
+    name: 'ONE Championship Official Mug',
+    description: 'Limited edition ONE Championship mug',
     type: 'goods',
     tokenCost: 2500,
     available: true,
   },
   {
     id: 'goods-6',
-    name: 'スポンサーD トレーニング器具 割引券 30%OFF',
-    description: 'フィットネス器具購入時に30%割引',
+    name: 'Sponsor D Training Equipment Discount 30% OFF',
+    description: '30% discount on fitness equipment purchases',
     type: 'goods',
     tokenCost: 12000,
     available: true,
   },
   {
     id: 'goods-7',
-    name: 'ONE Championship 限定ステッカーセット',
-    description: 'コレクターズアイテム！限定ステッカー5枚セット',
+    name: 'ONE Championship Limited Sticker Set',
+    description: 'Collector\'s item! Limited edition 5-piece sticker set',
     type: 'goods',
     tokenCost: 2000,
     available: true,
   },
   {
     id: 'goods-8',
-    name: 'スポンサーE 栄養管理アプリ プレミアムプラン',
-    description: '3ヶ月間のプレミアムプラン利用権',
+    name: 'Sponsor E Nutrition App Premium Plan',
+    description: '3-month premium plan access',
     type: 'goods',
     tokenCost: 4500,
     available: true,
   },
   {
     id: 'goods-9',
-    name: 'ONE Championship 公式ボトル',
-    description: 'ステンレス製の公式ウォーターボトル',
+    name: 'ONE Championship Official Bottle',
+    description: 'Stainless steel official water bottle',
     type: 'goods',
     tokenCost: 4000,
     available: true,
   },
   {
     id: 'goods-10',
-    name: 'スポンサーF ヨガスタジオ 体験券',
-    description: '指定ヨガスタジオで1回無料体験可能',
+    name: 'Sponsor F Yoga Studio Trial Pass',
+    description: 'One free trial session at designated yoga studio',
     type: 'goods',
     tokenCost: 5000,
     available: true,
   },
 ];
 
-// バッジの条件定義（交換不可、条件達成で自動獲得）
+// Badge condition definitions (non-exchangeable, automatically awarded when conditions are met)
 const badgeConditions = {
   'badge-master': {
     id: 'badge-master',
-    name: 'ONE FIT マスター バッジ',
-    description: '100回のトレーニングを達成した証',
+    name: 'ONE FIT Master Badge',
+    description: 'Awarded for completing 100 workouts',
     condition: (badges: WorkoutBadge[]) => badges.length >= 100,
   },
   'badge-champion': {
     id: 'badge-champion',
-    name: 'チャンピオン バッジ',
-    description: '週次ランキング1位獲得記念',
+    name: 'Champion Badge',
+    description: 'Commemorative badge for achieving 1st place in weekly ranking',
     condition: (badges: WorkoutBadge[], userRank: number | null) => userRank === 1,
   },
 };
@@ -316,21 +316,21 @@ const initialWorkoutSessions: WorkoutSession[] = [
   },
 ];
 
-// 難易度別のスコア倍率
+// Score multipliers by difficulty
 const difficultyMultipliers = {
   beginner: { scoreMultiplier: 1.0 },
   intermediate: { scoreMultiplier: 1.5 },
   advanced: { scoreMultiplier: 2.0 },
 };
 
-// 難易度別のカロリー消費量（1分あたりのkcal）
+// Calorie consumption per minute by difficulty (kcal/min)
 const caloriesPerMinute = {
-  beginner: 8,    // 初級: 1分あたり8kcal
-  intermediate: 12, // 中級: 1分あたり12kcal
-  advanced: 18,    // 上級: 1分あたり18kcal
+  beginner: 8,    // Beginner: 8kcal per minute
+  intermediate: 12, // Intermediate: 12kcal per minute
+  advanced: 18,    // Advanced: 18kcal per minute
 };
 
-// 週次ランキング用のヘルパー関数
+// Helper functions for weekly ranking
 const getWeekString = (timestamp: number): string => {
   const date = new Date(timestamp);
   const year = date.getFullYear();
@@ -552,12 +552,12 @@ export const useAppStore = create<AppStore>((set, get) => ({
         badges: [...badges, ...newAchievementBadges],
       });
       
-      // 通知を表示
+      // Show notification
       if (typeof window !== 'undefined') {
         newAchievementBadges.forEach((badge) => {
           const condition = badgeConditions[badge.achievementId! as keyof typeof badgeConditions];
           import('react-hot-toast').then(({ default: toast }) => {
-            toast.success(`実績バッジ獲得: ${condition.name}`, {
+            toast.success(`Achievement Badge Earned: ${condition.name}`, {
               icon: '🏅',
               duration: 5000,
             });
@@ -567,28 +567,28 @@ export const useAppStore = create<AppStore>((set, get) => ({
     }
   },
   
-  // ランキング関連（モックデータ）
+  // Ranking related (mock data)
   updateRankings: () => {
     const { workoutSessions, address, trainers } = get();
     
-    // 基本ランキングを生成
+    // Generate base rankings
     const baseRankings = buildRankingsFromSessions(workoutSessions, address);
     
-    // HOMEページと同じ方法で現在のユーザーのスコアを計算
+    // Calculate current user's score using the same method as HOME page
     const activeAddress = address ?? DEFAULT_USER_ADDRESS;
-    const mockTotalWorkouts = 48; // HOMEページのモックデータ
+    const mockTotalWorkouts = 48; // Mock data from HOME page
     
-    // 全トレーナーのスコアの合計（HOMEページと同じ計算）
+    // Sum of all trainer scores (same calculation as HOME page)
     const totalUserScore = trainers.reduce((sum, trainer) => sum + trainer.userScore, 0);
     const totalTrainerScore = trainers.reduce((sum, trainer) => sum + trainer.trainerScore, 0);
     const totalScore = totalUserScore + totalTrainerScore;
     
-    // 現在のユーザーのランキングエントリを更新または追加
+    // Update or add current user's ranking entry
     const userIndex = baseRankings.findIndex((entry) => entry.address === activeAddress);
     let rankings: RankingEntry[];
     
     if (userIndex >= 0) {
-      // 既存のエントリを更新
+      // Update existing entry
       rankings = baseRankings.map((entry, index) => {
         if (entry.address === activeAddress) {
           return {
@@ -600,20 +600,20 @@ export const useAppStore = create<AppStore>((set, get) => ({
         return entry;
       });
     } else {
-      // 新しいエントリを追加
+      // Add new entry
       rankings = [
         ...baseRankings,
         {
           address: activeAddress,
           totalWorkouts: mockTotalWorkouts,
           score: totalScore,
-          rank: 0, // 後で再計算
+          rank: 0, // Recalculated later
           hasPrizeTicket: false,
         },
       ];
     }
     
-    // スコアで再ソートしてランクを再計算
+    // Re-sort by score and recalculate ranks
     rankings = rankings
       .sort((a, b) => b.score - a.score)
       .map((entry, index) => ({
@@ -628,25 +628,25 @@ export const useAppStore = create<AppStore>((set, get) => ({
     get().checkAchievementBadges();
   },
   
-  // Prize Ticket関連
+  // Prize Ticket related
   checkPrizeTicket: (address) => {
     const { rankings } = get();
     const entry = rankings.find((r) => r.address === address);
     return entry?.hasPrizeTicket || false;
   },
   
-  // トレーニング関連
+  // Training related
   completeWorkoutSession: (trainerId, difficulty, userScore, trainerScore, workoutDurationMinutes) => {
     const { address, trainers, tokens, workoutSessions, badges } = get();
     const today = new Date().toISOString().split('T')[0];
     
-    // userScore = 消費カロリー（既に計算済み）
+    // userScore = calories burned (already calculated)
     const caloriesBurned = userScore;
     
-    // trainerScore = トレーナースコアの増分（難易度倍率は既に適用済み）
+    // trainerScore = trainer score increment (difficulty multiplier already applied)
     const trainerScoreIncrement = trainerScore;
     
-    // 消費カロリー = 獲得トークン
+    // Calories burned = Tokens earned
     const tokensEarned = caloriesBurned;
     
     // Trainerのスコアを更新
@@ -671,7 +671,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       difficulty,
       userScore: caloriesBurned, // 消費カロリー
       trainerScore: trainerScoreIncrement, // トレーナースコアの増分
-      tokensEarned, // 消費カロリー = 獲得トークン
+      tokensEarned, // Calories burned = Tokens earned
       caloriesBurned, // 消費カロリー（kcal）
       workoutDuration: workoutDurationMinutes, // トレーニング時間（分）
       timestamp: Date.now(),
@@ -739,7 +739,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return false;
   },
   
-  // 交換関連
+  // Exchange related
   exchangeItem: (itemId) => {
     const { exchangeItems, tokens, exchangeHistory } = get();
     const item = exchangeItems.find((i) => i.id === itemId);
@@ -752,12 +752,12 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return false;
     }
     
-    // トークンを消費
+    // Spend tokens
     if (!get().spendTokens(item.tokenCost)) {
       return false;
     }
     
-    // 交換履歴に追加
+    // Add to exchange history
     const history: ExchangeHistory = {
       id: `exchange-${Date.now()}`,
       itemId: item.id,

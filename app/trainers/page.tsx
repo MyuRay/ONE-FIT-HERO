@@ -12,16 +12,16 @@ export default function TrainersPage() {
 
   const handleSelectTrainer = (trainerId: string) => {
     if (!address) {
-      toast.error('ウォレットを接続してください');
+      toast.error('Please connect your wallet');
       return;
     }
     setSelectedTrainer(trainerId);
-    toast.success('トレーナーを選択しました！', { icon: '✅' });
+    toast.success('Trainer selected!', { icon: '✅' });
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* ヘッダー */}
+      {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -38,7 +38,7 @@ export default function TrainersPage() {
         </div>
       </header>
 
-      {/* ナビゲーション */}
+      {/* Navigation */}
       <nav className="border-b border-gray-700 bg-gray-800/30">
         <div className="container mx-auto px-4">
           <div className="flex gap-4">
@@ -82,14 +82,14 @@ export default function TrainersPage() {
         </div>
       </nav>
 
-      {/* メインコンテンツ */}
+      {/* Main content */}
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-8">トレーナーを選択</h2>
+        <h2 className="text-3xl font-bold mb-8">Select Trainer</h2>
         
         {!address ? (
           <div className="text-center py-20">
             <p className="text-gray-400 mb-8">
-              ウォレットを接続してトレーナーを選択してください
+              Please connect your wallet to select a trainer
             </p>
             <WalletConnectButton />
           </div>
@@ -113,7 +113,7 @@ export default function TrainersPage() {
                     className="mt-2 text-center"
                   >
                     <span className="px-3 py-1 bg-primary text-sm rounded-full">
-                      選択中
+                      Selected
                     </span>
                   </motion.div>
                 )}

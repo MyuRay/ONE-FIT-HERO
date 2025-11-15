@@ -40,12 +40,12 @@ export default function RewardsPage() {
     userRank 
   } = useAppStore();
 
-  // HOMEページと同じモックデータを使用
-  const mockTotalWorkouts = 48; // 累計トレーニング回数
-  const mockCurrentConsecutiveDays = 5; // 現在の連続トレーニング日数
-  const mockMaxConsecutiveDays = 12; // 最長連続トレーニング日数
+  // Use same mock data as HOME page
+  const mockTotalWorkouts = 48; // Total workout count
+  const mockCurrentConsecutiveDays = 5; // Current consecutive training days
+  const mockMaxConsecutiveDays = 12; // Longest consecutive training days
   
-  // 累計スコア（全トレーナーのスコアの合計）
+  // Total score (sum of all trainer scores)
   const totalUserScore = useMemo(() => {
     return trainers.reduce((sum, trainer) => sum + trainer.userScore, 0);
   }, [trainers]);
@@ -56,7 +56,7 @@ export default function RewardsPage() {
   
   const totalScore = totalUserScore + totalTrainerScore;
 
-  // 各トレーナーへの貢献度を計算（HOMEページのデータと整合）
+  // Calculate contribution to each trainer (aligned with HOME page data)
   const trainerContributions = useMemo(() => {
     const contributions = new Map<string, number>();
     trainers.forEach((trainer) => {
@@ -65,7 +65,7 @@ export default function RewardsPage() {
     return contributions;
   }, [trainers]);
 
-  // 最大貢献度のトレーナーを取得
+  // Get trainer with maximum contribution
   const maxContributionTrainer = useMemo(() => {
     if (trainerContributions.size === 0) return null;
     let maxTrainerId = '';
@@ -79,14 +79,14 @@ export default function RewardsPage() {
     return trainers.find((t) => t.id === maxTrainerId) || null;
   }, [trainerContributions, trainers]);
 
-  // バッジ定義
+  // Badge definitions
   const rewardBadges: RewardBadge[] = useMemo(() => {
     const badgesList: RewardBadge[] = [
-      // 連続日数バッジ（HOMEページのモックデータを使用）
+      // Consecutive days badges (using HOME page mock data)
       {
         id: 'consecutive-7',
-        name: '7日間連続チャレンジ',
-        description: '7日間連続でトレーニングを完了',
+        name: '7-Day Streak Challenge',
+        description: 'Complete training for 7 consecutive days',
         emoji: '🔥',
         rarity: 'common',
         unlocked: mockCurrentConsecutiveDays >= 7,
@@ -95,8 +95,8 @@ export default function RewardsPage() {
       },
       {
         id: 'consecutive-14',
-        name: '14日間連続マスター',
-        description: '14日間連続でトレーニングを完了',
+        name: '14-Day Streak Master',
+        description: 'Complete training for 14 consecutive days',
         emoji: '⚡',
         rarity: 'rare',
         unlocked: mockCurrentConsecutiveDays >= 14,
@@ -105,8 +105,8 @@ export default function RewardsPage() {
       },
       {
         id: 'consecutive-30',
-        name: '30日間連続キング',
-        description: '30日間連続でトレーニングを完了',
+        name: '30-Day Streak King',
+        description: 'Complete training for 30 consecutive days',
         emoji: '👑',
         rarity: 'epic',
         unlocked: mockCurrentConsecutiveDays >= 30,
@@ -115,36 +115,36 @@ export default function RewardsPage() {
       },
       {
         id: 'consecutive-60',
-        name: '60日間連続レジェンド',
-        description: '60日間連続でトレーニングを完了',
+        name: '60-Day Streak Legend',
+        description: 'Complete training for 60 consecutive days',
         emoji: '🏆',
         rarity: 'legendary',
         unlocked: mockCurrentConsecutiveDays >= 60,
         progress: mockCurrentConsecutiveDays,
         maxProgress: 60,
       },
-      // 週間1位バッジ
+      // Weekly ranking badges
       {
         id: 'weekly-champion',
-        name: '週間チャンピオン',
-        description: '週次ランキングで1位を獲得',
+        name: 'Weekly Champion',
+        description: 'Achieve 1st place in weekly ranking',
         emoji: '🥇',
         rarity: 'epic',
         unlocked: userRank === 1,
       },
       {
         id: 'weekly-top3',
-        name: '週間トップ3',
-        description: '週次ランキングで3位以内に入る',
+        name: 'Weekly Top 3',
+        description: 'Rank within top 3 in weekly ranking',
         emoji: '🥉',
         rarity: 'rare',
         unlocked: userRank !== null && userRank <= 3,
       },
-      // 累計トレーニング回数バッジ（HOMEページのモックデータを使用）
+      // Total workout count badges (using HOME page mock data)
       {
         id: 'workouts-10',
-        name: 'トレーニング初心者',
-        description: '累計10回のトレーニングを完了',
+        name: 'Training Novice',
+        description: 'Complete 10 total workouts',
         emoji: '💪',
         rarity: 'common',
         unlocked: mockTotalWorkouts >= 10,
@@ -153,8 +153,8 @@ export default function RewardsPage() {
       },
       {
         id: 'workouts-50',
-        name: 'トレーニング上級者',
-        description: '累計50回のトレーニングを完了',
+        name: 'Training Advanced',
+        description: 'Complete 50 total workouts',
         emoji: '💥',
         rarity: 'rare',
         unlocked: mockTotalWorkouts >= 50,
@@ -163,8 +163,8 @@ export default function RewardsPage() {
       },
       {
         id: 'workouts-100',
-        name: 'トレーニングマスター',
-        description: '累計100回のトレーニングを完了',
+        name: 'Training Master',
+        description: 'Complete 100 total workouts',
         emoji: '🎯',
         rarity: 'epic',
         unlocked: mockTotalWorkouts >= 100,
@@ -173,19 +173,19 @@ export default function RewardsPage() {
       },
       {
         id: 'workouts-500',
-        name: 'トレーニングレジェンド',
-        description: '累計500回のトレーニングを完了',
+        name: 'Training Legend',
+        description: 'Complete 500 total workouts',
         emoji: '🌟',
         rarity: 'legendary',
         unlocked: mockTotalWorkouts >= 500,
         progress: mockTotalWorkouts,
         maxProgress: 500,
       },
-      // 累計スコアバッジ
+      // Total score badges
       {
         id: 'score-10000',
-        name: 'スコアマイルストーン',
-        description: '累計スコア10,000pt達成',
+        name: 'Score Milestone',
+        description: 'Achieve total score of 10,000pt',
         emoji: '⭐',
         rarity: 'common',
         unlocked: totalScore >= 10000,
@@ -194,8 +194,8 @@ export default function RewardsPage() {
       },
       {
         id: 'score-50000',
-        name: 'スコアチャンピオン',
-        description: '累計スコア50,000pt達成',
+        name: 'Score Champion',
+        description: 'Achieve total score of 50,000pt',
         emoji: '✨',
         rarity: 'rare',
         unlocked: totalScore >= 50000,
@@ -204,27 +204,27 @@ export default function RewardsPage() {
       },
       {
         id: 'score-100000',
-        name: 'スコアレジェンド',
-        description: '累計スコア100,000pt達成',
+        name: 'Score Legend',
+        description: 'Achieve total score of 100,000pt',
         emoji: '💫',
         rarity: 'epic',
         unlocked: totalScore >= 100000,
         progress: totalScore,
         maxProgress: 100000,
       },
-      // 貢献度バッジ
+      // Contribution badges
       {
         id: 'contribution-hero',
-        name: '貢献ヒーロー',
-        description: `最も選手の応援度に貢献: ${maxContributionTrainer?.name || 'N/A'}`,
+        name: 'Contribution Hero',
+        description: `Contribute most to trainer support: ${maxContributionTrainer?.name || 'N/A'}`,
         emoji: '🦸',
         rarity: 'epic',
         unlocked: maxContributionTrainer !== null && (trainerContributions.get(maxContributionTrainer.id) || 0) > 0,
       },
       {
         id: 'trainer-supporter',
-        name: 'トレーナーサポーター',
-        description: 'すべてのトレーナーに貢献',
+        name: 'Trainer Supporter',
+        description: 'Contribute to all trainers',
         emoji: '🤝',
         rarity: 'rare',
         unlocked: trainerContributions.size >= trainers.length && trainers.length > 0,
@@ -239,7 +239,7 @@ export default function RewardsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* ヘッダー */}
+      {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -256,7 +256,7 @@ export default function RewardsPage() {
         </div>
       </header>
 
-      {/* ナビゲーション */}
+      {/* Navigation */}
       <nav className="border-b border-gray-700 bg-gray-800/30">
         <div className="container mx-auto px-4">
           <div className="flex gap-4">
@@ -300,45 +300,45 @@ export default function RewardsPage() {
         </div>
       </nav>
 
-      {/* メインコンテンツ */}
+      {/* Main content */}
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-8">REWARDS</h2>
 
         {!address ? (
           <div className="text-center py-20">
             <p className="text-gray-400 mb-8">
-              ウォレットを接続してREWARDSを確認してください
+              Please connect your wallet to view REWARDS
             </p>
             <WalletConnectButton />
           </div>
         ) : (
           <div className="space-y-8">
-            {/* 統計サマリー */}
+            {/* Statistics summary */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                <p className="text-sm text-gray-400 mb-1">獲得バッジ</p>
+                <p className="text-sm text-gray-400 mb-1">Unlocked Badges</p>
                 <p className="text-2xl font-bold text-primary">
                   {unlockedBadges.length}/{rewardBadges.length}
                 </p>
               </div>
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                <p className="text-sm text-gray-400 mb-1">連続日数</p>
-                <p className="text-2xl font-bold text-yellow-400">{mockCurrentConsecutiveDays}日</p>
+                <p className="text-sm text-gray-400 mb-1">Consecutive Days</p>
+                <p className="text-2xl font-bold text-yellow-400">{mockCurrentConsecutiveDays} days</p>
               </div>
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                <p className="text-sm text-gray-400 mb-1">累計トレーニング</p>
-                <p className="text-2xl font-bold text-green-400">{mockTotalWorkouts}回</p>
+                <p className="text-sm text-gray-400 mb-1">Total Workouts</p>
+                <p className="text-2xl font-bold text-green-400">{mockTotalWorkouts} times</p>
               </div>
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                <p className="text-sm text-gray-400 mb-1">累計スコア</p>
+                <p className="text-sm text-gray-400 mb-1">Total Score</p>
                 <p className="text-2xl font-bold text-blue-400">{totalScore.toLocaleString()}</p>
               </div>
             </div>
 
-            {/* 獲得済みバッジ */}
+            {/* Unlocked badges */}
             {unlockedBadges.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold mb-4">獲得済みバッジ ({unlockedBadges.length})</h3>
+                <h3 className="text-xl font-bold mb-4">Unlocked Badges ({unlockedBadges.length})</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {unlockedBadges.map((badge, index) => (
                     <motion.div
@@ -363,7 +363,7 @@ export default function RewardsPage() {
                           {badge.progress !== undefined && badge.maxProgress !== undefined && (
                             <div className="mt-2">
                               <div className="flex justify-between text-xs text-gray-400 mb-1">
-                                <span>進捗</span>
+                                <span>Progress</span>
                                 <span>{badge.progress} / {badge.maxProgress}</span>
                               </div>
                               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -384,10 +384,10 @@ export default function RewardsPage() {
               </div>
             )}
 
-            {/* 未獲得バッジ */}
+            {/* Locked badges */}
             {lockedBadges.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold mb-4">未獲得バッジ ({lockedBadges.length})</h3>
+                <h3 className="text-xl font-bold mb-4">Locked Badges ({lockedBadges.length})</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {lockedBadges.map((badge, index) => (
                     <motion.div
@@ -412,7 +412,7 @@ export default function RewardsPage() {
                           {badge.progress !== undefined && badge.maxProgress !== undefined && (
                             <div className="mt-2">
                               <div className="flex justify-between text-xs text-gray-400 mb-1">
-                                <span>進捗</span>
+                                <span>Progress</span>
                                 <span>{badge.progress} / {badge.maxProgress}</span>
                               </div>
                               <div className="w-full bg-gray-700 rounded-full h-2">

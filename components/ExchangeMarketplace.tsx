@@ -7,9 +7,9 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 const typeLabels: Record<string, { label: string; emoji: string; color: string }> = {
-  badge: { label: 'バッジ', emoji: '🏅', color: 'yellow' },
-  goods: { label: 'グッズ', emoji: '🎁', color: 'blue' },
-  lottery_ticket: { label: '抽選券', emoji: '🎫', color: 'purple' },
+  badge: { label: 'Badge', emoji: '🏅', color: 'yellow' },
+  goods: { label: 'Goods', emoji: '🎁', color: 'blue' },
+  lottery_ticket: { label: 'Lottery Ticket', emoji: '🎫', color: 'purple' },
 };
 
 export function ExchangeMarketplace() {
@@ -25,19 +25,19 @@ export function ExchangeMarketplace() {
 
   const handleExchange = (item: ExchangeItem) => {
     if (tokenAmount < item.tokenCost) {
-      toast.error('トークンが不足しています');
+      toast.error('Insufficient tokens');
       return;
     }
 
     if (exchangeItem(item.id)) {
       const isGoods = item.type === 'goods';
-      const message = isGoods ? `${item.name}を購入しました！` : `${item.name}に応募しました！`;
+      const message = isGoods ? `Purchased ${item.name}!` : `Applied for ${item.name}!`;
       toast.success(message, {
         icon: isGoods ? '🎁' : '🎉',
         duration: 3000,
       });
     } else {
-      const errorMessage = item.type === 'goods' ? '購入に失敗しました' : '応募に失敗しました';
+      const errorMessage = item.type === 'goods' ? 'Purchase failed' : 'Application failed';
       toast.error(errorMessage);
     }
   };
@@ -52,18 +52,18 @@ export function ExchangeMarketplace() {
 
   return (
     <div className="space-y-6">
-      {/* トークン残高 */}
+      {/* Token balance */}
       <div className="bg-gradient-to-r from-yellow-900/30 to-yellow-800/30 border-2 border-yellow-600 rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-gray-400 mb-1">所持トークン</p>
+            <p className="text-sm text-gray-400 mb-1">Token Balance</p>
             <p className="text-4xl font-bold text-yellow-400">{tokenAmount.toLocaleString()}</p>
           </div>
           <div className="text-6xl">💰</div>
         </div>
       </div>
 
-      {/* タブ */}
+      {/* Tabs */}
       <div className="flex gap-4 border-b border-gray-700">
         <button
           onClick={() => setSelectedTab('marketplace')}
@@ -73,7 +73,7 @@ export function ExchangeMarketplace() {
               : 'text-gray-400 hover:text-white'
           }`}
         >
-          マーケットプレイス
+          Marketplace
         </button>
         <button
           onClick={() => setSelectedTab('history')}
@@ -83,11 +83,11 @@ export function ExchangeMarketplace() {
               : 'text-gray-400 hover:text-white'
           }`}
         >
-          交換履歴 ({exchangeHistory.length})
+          Exchange History ({exchangeHistory.length})
         </button>
       </div>
 
-      {/* マーケットプレイス */}
+      {/* Marketplace */}
       {selectedTab === 'marketplace' && (
         <div className="space-y-8">
           {Object.entries(groupedItems).map(([type, items]) => {
@@ -115,7 +115,7 @@ export function ExchangeMarketplace() {
                       <h4 className="text-lg font-bold mb-2">{item.name}</h4>
                       <p className="text-sm text-gray-400 mb-4">{item.description}</p>
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm text-gray-400">必要トークン</span>
+                        <span className="text-sm text-gray-400">Required Tokens</span>
                         <span className="text-xl font-bold text-yellow-400">
                           {item.tokenCost.toLocaleString()}
                         </span>
@@ -140,10 +140,10 @@ export function ExchangeMarketplace() {
                         }
                       >
                         {tokenAmount < item.tokenCost
-                          ? 'トークン不足'
+                          ? 'Insufficient Tokens'
                           : item.available
-                          ? item.type === 'goods' ? '購入する' : '応募する'
-                          : '在庫切れ'}
+                          ? item.type === 'goods' ? 'Purchase' : 'Apply'
+                          : 'Out of Stock'}
                       </motion.button>
                     </motion.div>
                   ))}
@@ -154,13 +154,13 @@ export function ExchangeMarketplace() {
         </div>
       )}
 
-      {/* 交換履歴 */}
+      {/* Exchange history */}
       {selectedTab === 'history' && (
         <div className="space-y-4">
           {exchangeHistory.length === 0 ? (
             <div className="text-center py-12 text-gray-400">
-              <p className="text-lg mb-2">交換履歴がありません</p>
-              <p className="text-sm">マーケットプレイスでアイテムを交換しましょう</p>
+              <p className="text-lg mb-2">No exchange history</p>
+              <p className="text-sm">Exchange items in the marketplace</p>
             </div>
           ) : (
             exchangeHistory
@@ -177,11 +177,11 @@ export function ExchangeMarketplace() {
                     <div>
                       <p className="font-bold text-lg">{history.itemName}</p>
                       <p className="text-sm text-gray-400">
-                        {new Date(history.timestamp).toLocaleString('ja-JP')}
+                        {new Date(history.timestamp).toLocaleString('en-US')}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-400">消費トークン</p>
+                      <p className="text-sm text-gray-400">Tokens Spent</p>
                       <p className="text-xl font-bold text-yellow-400">
                         -{history.tokenCost.toLocaleString()}
                       </p>

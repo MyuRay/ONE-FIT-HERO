@@ -18,11 +18,11 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
     try {
       setIsConnecting(true);
       await connect(walletName);
-      toast.success('ウォレットに接続しました');
+      toast.success('Wallet connected successfully');
       onClose();
     } catch (error) {
       console.error('Wallet connection error:', error);
-      toast.error('ウォレット接続に失敗しました');
+      toast.error('Failed to connect wallet');
     } finally {
       setIsConnecting(false);
     }
@@ -40,7 +40,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
           className="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 border border-gray-700"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-white">ウォレットを選択</h2>
+            <h2 className="text-xl font-bold text-white">Select Wallet</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors"
@@ -52,7 +52,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
           {wallets.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-gray-400 mb-4">
-                Suiウォレットが見つかりません
+                No Sui wallet found
               </p>
               <div className="space-y-2">
                 <a
@@ -61,7 +61,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
                   rel="noopener noreferrer"
                   className="block text-primary hover:underline"
                 >
-                  Sui Walletをインストール
+                  Install Sui Wallet
                 </a>
                 <a
                   href="https://slushwallet.com"
@@ -69,7 +69,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
                   rel="noopener noreferrer"
                   className="block text-primary hover:underline"
                 >
-                  Slush Walletをインストール
+                  Install Slush Wallet
                 </a>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
                     <div>
                       <p className="font-medium text-white">{wallet.name}</p>
                       <p className="text-sm text-gray-400">
-                        インストール済み
+                        Installed
                       </p>
                     </div>
                   </div>

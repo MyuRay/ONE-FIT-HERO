@@ -14,14 +14,14 @@ export function PrizeTicketCard() {
         <div className="flex-1">
           <h4 className="text-2xl font-bold text-yellow-400 mb-2">Prize Ticket NFT</h4>
           <p className="text-gray-300 mb-4">
-            週次ランキング上位入賞により獲得した抽選券です。
+            Lottery ticket earned by ranking in the top of the weekly ranking.
           </p>
           <div className="flex gap-2">
             <span className="px-3 py-1 bg-yellow-600/30 text-yellow-300 text-sm rounded">
               NFT
             </span>
             <span className="px-3 py-1 bg-yellow-600/30 text-yellow-300 text-sm rounded">
-              抽選券
+              Lottery Ticket
             </span>
           </div>
         </div>

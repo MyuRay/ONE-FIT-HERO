@@ -26,7 +26,7 @@ export function TrainerCard({ trainer, onClick, showStats = false, rank }: Train
       whileTap={onClick ? { scale: 0.98 } : {}}
     >
       <div className="flex items-start gap-6">
-        {/* Trainer画像エリア */}
+        {/* Trainer image area */}
         {trainer.image ? (
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary flex-shrink-0">
             <img
@@ -54,13 +54,13 @@ export function TrainerCard({ trainer, onClick, showStats = false, rank }: Train
             <p className="text-gray-400 text-sm">{trainer.description}</p>
           )}
 
-          {/* 累計スコア表示（常に表示） */}
+          {/* Total score display (always shown) */}
           <div className="mt-4 pt-4 border-t border-gray-700">
-            <p className="text-sm font-medium text-gray-300 mb-3">累計スコア</p>
+            <p className="text-sm font-medium text-gray-300 mb-3">Total Score</p>
             <div className="space-y-2">
-              {/* あなたの貢献度（パーセンテージ） */}
+              {/* Your contribution (percentage) */}
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400">あなたのスコア（このトレーナー）</span>
+                <span className="text-sm text-gray-400">Your Score (this trainer)</span>
                 <div className="text-right">
                   <motion.span
                     key={`score-${trainer.userScore}`}
@@ -81,7 +81,7 @@ export function TrainerCard({ trainer, onClick, showStats = false, rank }: Train
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400">トレーナーのスコア</span>
+                <span className="text-sm text-gray-400">Trainer Score</span>
                 <motion.span
                   key={trainer.trainerScore}
                   initial={{ scale: 1.1 }}
@@ -92,7 +92,7 @@ export function TrainerCard({ trainer, onClick, showStats = false, rank }: Train
                 </motion.span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-gray-700">
-                <span className="text-sm font-medium text-gray-300">合計スコア</span>
+                <span className="text-sm font-medium text-gray-300">Total Score</span>
                 <motion.span
                   key={trainer.userScore + trainer.trainerScore}
                   initial={{ scale: 1.1 }}

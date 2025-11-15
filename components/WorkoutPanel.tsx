@@ -11,9 +11,9 @@ import { suiService } from '@/lib/sui';
 import { AICoaching } from './AICoaching';
 
 const difficultyLabels: Record<WorkoutDifficulty, { label: string; emoji: string; color: string }> = {
-  beginner: { label: '初級', emoji: '🟢', color: 'green' },
-  intermediate: { label: '中級', emoji: '🟡', color: 'yellow' },
-  advanced: { label: '上級', emoji: '🔴', color: 'red' },
+  beginner: { label: 'Beginner', emoji: '🟢', color: 'green' },
+  intermediate: { label: 'Intermediate', emoji: '🟡', color: 'yellow' },
+  advanced: { label: 'Advanced', emoji: '🔴', color: 'red' },
 };
 
 const caloriesPerMinute: Record<WorkoutDifficulty, number> = {
@@ -55,8 +55,8 @@ export function WorkoutPanel() {
   const [videoCurrentTime, setVideoCurrentTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [liveTrainerScore, setLiveTrainerScore] = useState(0);
-  const [reproductionRate, setReproductionRate] = useState<number>(100); // AI判定による再現度（0-100%）
-  const [showEndWorkoutDialog, setShowEndWorkoutDialog] = useState(false); // トレーニング終了確認ダイアログ
+  const [reproductionRate, setReproductionRate] = useState<number>(100); // AI-determined reproduction rate (0-100%)
+  const [showEndWorkoutDialog, setShowEndWorkoutDialog] = useState(false); // End workout confirmation dialog
 
   const workoutTimerRef = useRef<NodeJS.Timeout | null>(null);
   const trainerTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -98,35 +98,35 @@ export function WorkoutPanel() {
     if (!selectedTrainer || !selectedDifficulty) return;
 
     if (todayBadgeCompleted) {
-      toast.error('今日のワークアウトは既に完了しています');
+      toast.error('Today\'s workout is already completed');
       return;
     }
 
     if (!address) {
-      toast.error('ウォレットが接続されていません');
+      toast.error('Wallet is not connected');
       return;
     }
 
     setIsWorkingOut(false);
 
-    // AIによる再現度判定を取得
+    // Get AI reproduction rate evaluation
     const finalReproductionRate = reproductionRate;
     
-    // 再現度が100%の場合、時間分のカロリーをそのままスコア・トークンとして付与
-    const workoutMinutes = workoutTime / 60; // 分単位（小数点を含む）
+    // If reproduction rate is 100%, award calories equal to time as score and tokens
+    const workoutMinutes = workoutTime / 60; // Minutes (including decimals)
     let finalUserScore = 0;
     
     if (finalReproductionRate >= 100) {
-      // 再現度100%: 時間分のカロリーをそのまま付与
+      // 100% reproduction rate: Award calories equal to time
       finalUserScore = Math.floor(workoutMinutes * caloriesPerMinute[selectedDifficulty]);
     } else {
-      // 再現度が100%未満の場合、再現度に応じて調整
+      // If reproduction rate is less than 100%, adjust based on reproduction rate
       finalUserScore = Math.floor(
         (workoutMinutes * caloriesPerMinute[selectedDifficulty]) * (finalReproductionRate / 100)
       );
     }
     
-    // 最小値を1に設定
+    // Set minimum value to 1
     finalUserScore = Math.max(1, finalUserScore);
     
     const adjustedTrainerScore = Math.max(
@@ -148,12 +148,12 @@ export function WorkoutPanel() {
           signAndExecuteTransactionBlock
         );
 
-        toast.success('ブロックチェーンに保存しました！', { icon: '⛓️', duration: 3000 });
+        toast.success('Saved to blockchain!', { icon: '⛓️', duration: 3000 });
       } else {
-        toast('オンチェーン保存をスキップ（NFT未取得または未設定）', { icon: 'ℹ️', duration: 3000 });
+        toast('On-chain save skipped (NFT not obtained or not configured)', { icon: 'ℹ️', duration: 3000 });
       }
     } catch (error: any) {
-      toast.error(`オンチェーン保存に失敗しました: ${error?.message ?? 'Unknown error'}`);
+      toast.error(`Failed to save on-chain: ${error?.message ?? 'Unknown error'}`);
     } finally {
       completeWorkoutSession(
         selectedTrainer.id,
@@ -165,12 +165,12 @@ export function WorkoutPanel() {
     }
 
     setShowResults(true);
-    toast.success('ワークアウト完了！', { icon: '🎉', duration: 3000 });
+    toast.success('Workout Complete!', { icon: '🎉', duration: 3000 });
     setTimeout(() => {
-      const reproductionText = finalReproductionRate >= 100 
-        ? '再現度100%！' 
-        : `再現度${finalReproductionRate}%`;
-      toast(`AI判定: ${reproductionText}\n消費カロリー: ${finalUserScore}kcal = トークン +${finalUserScore}`, {
+      const reproductionText = finalReproductionRate >= 100
+        ? 'Reproduction Rate: 100%!' 
+        : `Reproduction Rate: ${finalReproductionRate}%`;
+      toast(`AI Evaluation: ${reproductionText}\nCalories Burned: ${finalUserScore}kcal = Tokens +${finalUserScore}`, {
         icon: finalReproductionRate >= 100 ? '✨' : '🔥',
         duration: 4000,
       });
@@ -258,17 +258,17 @@ export function WorkoutPanel() {
 
   const handleStartWorkout = useCallback(() => {
     if (!selectedTrainer) {
-      toast.error('トレーナーを選択してください');
+      toast.error('Please select a trainer');
       return;
     }
 
     if (!selectedDifficulty) {
-      toast.error('難易度を選択してください');
+      toast.error('Please select a difficulty');
       return;
     }
 
     if (todayBadgeCompleted) {
-      toast.error('今日のワークアウトは既に完了しています');
+      toast.error('Today\'s workout is already completed');
       return;
     }
 
@@ -278,7 +278,7 @@ export function WorkoutPanel() {
     setShowResults(false);
     setVideoState('idle');
 
-    toast.success('トレーニングを開始しました！動画を再生してください', {
+    toast.success('Training started! Please play the video', {
       icon: '🎬',
       duration: 3000,
     });
@@ -287,12 +287,12 @@ export function WorkoutPanel() {
   if (!selectedTrainer) {
     return (
       <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 text-center">
-        <p className="text-yellow-400 mb-4">トレーナーが選択されていません</p>
+        <p className="text-yellow-400 mb-4">No trainer selected</p>
         <a
           href="/trainers"
           className="inline-block px-6 py-2 bg-primary hover:bg-primary-dark rounded-lg font-medium transition-colors"
         >
-          トレーナーを選択
+          Select Trainer
         </a>
       </div>
     );
@@ -302,7 +302,7 @@ export function WorkoutPanel() {
     <div className="space-y-6">
       <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
         <div className="flex items-start gap-4">
-          {/* トレーナー画像 */}
+          {/* Trainer Image */}
           <div className="flex-shrink-0">
             <div className="w-20 h-20 rounded-full border-2 border-primary overflow-hidden flex items-center justify-center bg-gray-700/50">
               {selectedTrainer.image ? (
@@ -318,7 +318,7 @@ export function WorkoutPanel() {
             </div>
           </div>
           
-          {/* トレーナー情報 */}
+          {/* Trainer Info */}
           <div className="flex-1">
             <h2 className="text-2xl font-bold mb-2 text-primary">{selectedTrainer.name}</h2>
             {selectedTrainer.description && (
@@ -326,13 +326,13 @@ export function WorkoutPanel() {
             )}
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div>
-                <p className="text-sm text-gray-400">あなたのスコア</p>
+                <p className="text-sm text-gray-400">Your Score</p>
                 <p className="text-xl font-bold text-primary">
                   {selectedTrainer.userScore.toLocaleString()}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">トレーナーのスコア</p>
+                <p className="text-sm text-gray-400">Trainer Score</p>
                 <p className="text-xl font-bold text-yellow-400">
                   {currentTrainerScore.toLocaleString()}
                 </p>
@@ -344,7 +344,7 @@ export function WorkoutPanel() {
 
       {!isWorkingOut && !showResults && (
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-          <h3 className="text-xl font-bold mb-4">難易度を選択</h3>
+          <h3 className="text-xl font-bold mb-4">Select Difficulty</h3>
           <div className="grid grid-cols-3 gap-4">
             {(['beginner', 'intermediate', 'advanced'] as WorkoutDifficulty[]).map((difficulty) => {
               const info = difficultyLabels[difficulty];
@@ -362,9 +362,9 @@ export function WorkoutPanel() {
                   <div className="text-3xl mb-2">{info.emoji}</div>
                   <p className="font-bold">{info.label}</p>
                   <p className="text-xs text-gray-400 mt-1">
-                    {difficulty === 'beginner' && '8kcal/分'}
-                    {difficulty === 'intermediate' && '12kcal/分'}
-                    {difficulty === 'advanced' && '18kcal/分'}
+                    {difficulty === 'beginner' && '8kcal/min'}
+                    {difficulty === 'intermediate' && '12kcal/min'}
+                    {difficulty === 'advanced' && '18kcal/min'}
                   </p>
                 </motion.button>
               );
@@ -373,10 +373,10 @@ export function WorkoutPanel() {
         </div>
       )}
 
-      {/* トレーニング動画とカメラを横並び表示 */}
+      {/* Training Video and Camera Side-by-Side */}
       {selectedDifficulty && isWorkingOut && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* 左側: コーチング動画 */}
+          {/* Left: Coaching Video */}
           <div>
             <WorkoutVideoPlayer
               difficulty={selectedDifficulty}
@@ -386,7 +386,7 @@ export function WorkoutPanel() {
             />
           </div>
           
-          {/* 右側: 自分のカメラ画面とAIコーチング */}
+          {/* Right: Your Camera and AI Coaching */}
           <div>
             <AICoaching 
               workoutTime={workoutTime} 
@@ -397,7 +397,7 @@ export function WorkoutPanel() {
         </div>
       )}
 
-      {/* トレーニング開始前は動画のみ表示 */}
+      {/* Before training starts, show video only */}
       {selectedDifficulty && !isWorkingOut && (
         <WorkoutVideoPlayer
           difficulty={selectedDifficulty}
@@ -418,10 +418,10 @@ export function WorkoutPanel() {
               className="space-y-4"
             >
               <div className="text-center space-y-2">
-                <h3 className="text-2xl font-bold">コピートレーニング中...</h3>
-                <p className="text-gray-400">トレーナーの動きを真似しましょう！</p>
+                <h3 className="text-2xl font-bold">Copy Training in Progress...</h3>
+                <p className="text-gray-400">Follow the trainer's movements!</p>
                 <div className="text-sm text-gray-400">
-                  動画状態:
+                  Video Status:
                   <span className={`ml-2 font-bold ${
                     videoState === 'playing'
                       ? 'text-green-400'
@@ -432,16 +432,16 @@ export function WorkoutPanel() {
                       : 'text-gray-400'
                   }`}>
                     {videoState === 'playing'
-                      ? '▶️ 再生中'
+                      ? '▶️ Playing'
                       : videoState === 'paused'
-                      ? '⏸️ 一時停止'
+                      ? '⏸️ Paused'
                       : videoState === 'ended'
-                      ? '⏹️ 終了'
-                      : '⏸️ 待機中'}
+                      ? '⏹️ Ended'
+                      : '⏸️ Idle'}
                   </span>
                 </div>
                 <div className="text-4xl font-bold text-primary">
-                  再生時間: {Math.floor(workoutTime / 60)}:{(workoutTime % 60).toString().padStart(2, '0')}
+                  Playback Time: {Math.floor(workoutTime / 60)}:{(workoutTime % 60).toString().padStart(2, '0')}
                   {videoDuration > 0 && (
                     <span className="text-xl text-gray-400 ml-2">
                       / {Math.floor(videoDuration / 60)}:{(Math.floor(videoDuration) % 60).toString().padStart(2, '0')}
@@ -457,13 +457,13 @@ export function WorkoutPanel() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  トレーニング終了
+                  End Workout
                 </motion.button>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-700/50 rounded-lg p-4">
-                  <p className="text-sm text-gray-400 mb-1">あなたのスコア（消費カロリー）</p>
+                  <p className="text-sm text-gray-400 mb-1">Your Score (Calories Burned)</p>
                   <motion.p
                     key={currentUserScore}
                     initial={{ scale: 1.2, color: '#FEE2E2' }}
@@ -473,11 +473,11 @@ export function WorkoutPanel() {
                     {currentUserScore}
                   </motion.p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {selectedDifficulty && `${caloriesPerMinute[selectedDifficulty]}kcal/分`}
+                    {selectedDifficulty && `${caloriesPerMinute[selectedDifficulty]}kcal/min`}
                   </p>
                 </div>
                 <div className="bg-gray-700/50 rounded-lg p-4">
-                  <p className="text-sm text-gray-400 mb-1">トレーナーのスコア（累積）</p>
+                  <p className="text-sm text-gray-400 mb-1">Trainer Score (Cumulative)</p>
                   <motion.p
                     key={currentTrainerScore}
                     initial={{ scale: 1.2, color: '#FEF3C7' }}
@@ -488,7 +488,7 @@ export function WorkoutPanel() {
                   </motion.p>
                   {trainerScoreIncrement > 0 && selectedDifficulty && (
                     <p className="text-xs text-gray-500 mt-1">
-                      今回増分: +
+                      This Session: +
                       {Math.floor(trainerScoreIncrement * difficultyMultipliers[selectedDifficulty]).toLocaleString()}
                     </p>
                   )}
@@ -497,10 +497,10 @@ export function WorkoutPanel() {
 
               {selectedDifficulty && (
                 <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-4 border border-yellow-700/50">
-                  <p className="text-sm text-gray-300 mb-1">💰 獲得トークン（推定）</p>
+                  <p className="text-sm text-gray-300 mb-1">💰 Tokens Earned (Estimated)</p>
                   <p className="text-3xl font-bold text-yellow-400">+{currentUserScore}</p>
                   <p className="text-xs text-gray-400 mt-2">
-                    消費カロリー = 獲得トークン（1:1） | トレーニング時間: {Math.floor(workoutTime / 60)}分 {workoutTime % 60}秒
+                    Calories Burned = Tokens Earned (1:1) | Training Time: {Math.floor(workoutTime / 60)}min {workoutTime % 60}sec
                   </p>
                 </div>
               )}
@@ -514,14 +514,14 @@ export function WorkoutPanel() {
               className="space-y-4"
             >
               <div className="text-6xl mb-4">🎉</div>
-              <h3 className="text-2xl font-bold">トレーニング完了！</h3>
+              <h3 className="text-2xl font-bold">Training Complete!</h3>
               <div className="grid grid-cols-2 gap-4 mt-6">
                 <div className="bg-primary/20 rounded-lg p-4 border border-primary">
-                  <p className="text-sm text-gray-400 mb-1">あなたのスコア（消費カロリー）</p>
+                  <p className="text-sm text-gray-400 mb-1">Your Score (Calories Burned)</p>
                   <p className="text-3xl font-bold text-primary">{currentUserScore}</p>
                 </div>
                 <div className="bg-yellow-900/20 rounded-lg p-4 border border-yellow-600">
-                  <p className="text-sm text-gray-400 mb-1">トレーナーのスコア（累積）</p>
+                  <p className="text-sm text-gray-400 mb-1">Trainer Score (Cumulative)</p>
                   <p className="text-3xl font-bold text-yellow-400">{currentTrainerScore.toLocaleString()}</p>
                 </div>
               </div>
@@ -534,7 +534,7 @@ export function WorkoutPanel() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                もう一度トレーニング
+                Train Again
               </motion.button>
             </motion.div>
           ) : (
@@ -546,11 +546,11 @@ export function WorkoutPanel() {
               className="space-y-4 text-center"
             >
               <div className="text-6xl mb-4">🏋️</div>
-              <h3 className="text-2xl font-bold">ワークアウト準備完了</h3>
-              <p className="text-gray-400">トレーナーと一緒にコピートレーニングを始めましょう！</p>
+              <h3 className="text-2xl font-bold">Ready to Workout</h3>
+              <p className="text-gray-400">Let's start copy training with the trainer!</p>
               {todayBadgeCompleted ? (
                 <div className="bg-green-900/20 border border-green-700 rounded-lg p-4">
-                  <p className="text-green-400 font-medium">✅ 今日のワークアウトは完了しています</p>
+                  <p className="text-green-400 font-medium">✅ Today's workout is completed</p>
                 </div>
               ) : (
                 <motion.button
@@ -562,7 +562,7 @@ export function WorkoutPanel() {
                   whileHover={selectedDifficulty ? { scale: 1.05 } : {}}
                   whileTap={selectedDifficulty ? { scale: 0.95 } : {}}
                 >
-                  ワークアウト開始
+                  Start Workout
                 </motion.button>
               )}
             </motion.div>
@@ -572,24 +572,24 @@ export function WorkoutPanel() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-          <p className="text-sm text-gray-400">今日のバッジ</p>
-          <p className="text-2xl font-bold">{todayBadgeCompleted ? '✅ 完了' : '⏳ 未完了'}</p>
+          <p className="text-sm text-gray-400">Today's Badge</p>
+          <p className="text-2xl font-bold">{todayBadgeCompleted ? '✅ Completed' : '⏳ Not Completed'}</p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-          <p className="text-sm text-gray-400">累計バッジ数</p>
+          <p className="text-sm text-gray-400">Total Badges</p>
           <p className="text-2xl font-bold text-primary">{totalBadges}</p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-          <p className="text-sm text-gray-400">所持トークン</p>
+          <p className="text-sm text-gray-400">Token Balance</p>
           <p className="text-2xl font-bold text-yellow-400">{tokenAmount.toLocaleString()}</p>
         </div>
       </div>
 
-      {/* トレーニング終了確認ダイアログ */}
+      {/* End Workout Confirmation Dialog */}
       <AnimatePresence>
         {showEndWorkoutDialog && (
           <>
-            {/* オーバーレイ */}
+            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -597,7 +597,7 @@ export function WorkoutPanel() {
               onClick={() => setShowEndWorkoutDialog(false)}
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             >
-              {/* ダイアログ */}
+              {/* Dialog */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -606,40 +606,40 @@ export function WorkoutPanel() {
                 className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-gray-700 p-6 max-w-md w-full shadow-2xl"
               >
                 <div className="text-center space-y-4">
-                  {/* アイコン */}
+                  {/* Icon */}
                   <div className="text-6xl mb-4">🏋️</div>
                   
-                  {/* タイトル */}
+                  {/* Title */}
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    トレーニングを終了しますか？
+                    End Training?
                   </h3>
                   
-                  {/* 説明 */}
+                  {/* Description */}
                   <p className="text-gray-400 mb-6">
-                    現在のトレーニング時間とスコアが記録されます。
+                    Current training time and score will be recorded.
                     <br />
-                    終了後は結果を確認できます。
+                    You can check the results after finishing.
                   </p>
 
-                  {/* 現在のスコア表示 */}
+                  {/* Current Score Display */}
                   {selectedDifficulty && (
                     <div className="bg-gray-700/50 rounded-lg p-4 mb-6">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <p className="text-gray-400 mb-1">トレーニング時間</p>
+                          <p className="text-gray-400 mb-1">Training Time</p>
                           <p className="text-lg font-bold text-primary">
                             {Math.floor(workoutTime / 60)}:{(workoutTime % 60).toString().padStart(2, '0')}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400 mb-1">推定カロリー</p>
+                          <p className="text-gray-400 mb-1">Estimated Calories</p>
                           <p className="text-lg font-bold text-yellow-400">
                             {currentUserScore}kcal
                           </p>
                         </div>
                       </div>
                       <div className="mt-3 pt-3 border-t border-gray-600">
-                        <p className="text-xs text-gray-400 mb-1">AI判定: 再現度</p>
+                        <p className="text-xs text-gray-400 mb-1">AI Evaluation: Reproduction Rate</p>
                         <p className="text-xl font-bold text-green-400">
                           {reproductionRate.toFixed(0)}%
                         </p>
@@ -647,7 +647,7 @@ export function WorkoutPanel() {
                     </div>
                   )}
 
-                  {/* ボタン */}
+                  {/* Buttons */}
                   <div className="flex gap-3">
                     <motion.button
                       onClick={() => setShowEndWorkoutDialog(false)}
@@ -655,7 +655,7 @@ export function WorkoutPanel() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      キャンセル
+                      Cancel
                     </motion.button>
                     <motion.button
                       onClick={() => {
@@ -666,7 +666,7 @@ export function WorkoutPanel() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      終了する
+                      End
                     </motion.button>
                   </div>
                 </div>

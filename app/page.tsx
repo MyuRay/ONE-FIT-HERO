@@ -48,7 +48,7 @@ export default function Home() {
   } = useAppStore();
   const [liveTrainerScores, setLiveTrainerScores] = useState<LiveScoreMap>({});
 
-  // 初期化: 新しいトレーナーが追加されたらライブスコアに登録
+  // Initialize: Register new trainers to live scores
   useEffect(() => {
     if (!trainers.length) return;
     setLiveTrainerScores((prev) => {
@@ -62,7 +62,7 @@ export default function Home() {
     });
   }, [trainers]);
 
-  // モックのリアルタイム更新: 5秒ごとにランダム増加
+  // Mock real-time updates: Random increment every 5 seconds
   useEffect(() => {
     if (!trainers.length) return;
     const intervalId = setInterval(() => {
@@ -90,7 +90,7 @@ export default function Home() {
   }, [liveTrainerScores, selectedTrainerBase]);
   const tokenAmount = getTokenAmount();
   
-  // リアルタイムランキングと同じ計算方法: 全トレーナーのスコアを合計
+  // Same calculation method as real-time ranking: Sum all trainer scores
   const totalUserScore = useMemo(() => {
     return trainers.reduce((sum, trainer) => sum + trainer.userScore, 0);
   }, [trainers]);
@@ -104,13 +104,13 @@ export default function Home() {
   
   const totalScore = totalUserScore + totalTrainerScore;
   
-  // モックデータ: 累計トレーニング回数と連続トレーニング日数
-  const mockTotalWorkouts = 48; // 累計トレーニング回数
-  const mockWeeklyWorkouts = 6; // 直近7日間のトレーニング回数
-  const mockCurrentConsecutiveDays = 5; // 現在の連続トレーニング日数
-  const mockMaxConsecutiveDays = 12; // 最長連続トレーニング日数
+  // Mock data: Total workout count and consecutive training days
+  const mockTotalWorkouts = 48; // Total workout count
+  const mockWeeklyWorkouts = 6; // Workout count in the last 7 days
+  const mockCurrentConsecutiveDays = 5; // Current consecutive training days
+  const mockMaxConsecutiveDays = 12; // Longest consecutive training days
   
-  // 各トレーナーへの貢献度を計算（REWARDSページと同じ）
+  // Calculate contribution to each trainer (same as REWARDS page)
   const trainerContributions = useMemo(() => {
     const contributions = new Map<string, number>();
     trainers.forEach((trainer) => {
@@ -119,7 +119,7 @@ export default function Home() {
     return contributions;
   }, [trainers]);
 
-  // 最大貢献度のトレーナーを取得
+  // Get trainer with maximum contribution
   const maxContributionTrainer = useMemo(() => {
     if (trainerContributions.size === 0) return null;
     let maxTrainerId = '';
@@ -136,11 +136,11 @@ export default function Home() {
   // REWARDSページと同じバッジ定義
   const rewardBadges: RewardBadge[] = useMemo(() => {
     const badgesList: RewardBadge[] = [
-      // 連続日数バッジ
+      // Consecutive Days Badges
       {
         id: 'consecutive-7',
-        name: '7日間連続チャレンジ',
-        description: '7日間連続でトレーニングを完了',
+        name: '7-Day Streak Challenge',
+        description: 'Complete training for 7 consecutive days',
         emoji: '🔥',
         rarity: 'common',
         unlocked: mockCurrentConsecutiveDays >= 7,
@@ -149,8 +149,8 @@ export default function Home() {
       },
       {
         id: 'consecutive-14',
-        name: '14日間連続マスター',
-        description: '14日間連続でトレーニングを完了',
+        name: '14-Day Streak Master',
+        description: 'Complete training for 14 consecutive days',
         emoji: '⚡',
         rarity: 'rare',
         unlocked: mockCurrentConsecutiveDays >= 14,
@@ -159,8 +159,8 @@ export default function Home() {
       },
       {
         id: 'consecutive-30',
-        name: '30日間連続キング',
-        description: '30日間連続でトレーニングを完了',
+        name: '30-Day Streak King',
+        description: 'Complete training for 30 consecutive days',
         emoji: '👑',
         rarity: 'epic',
         unlocked: mockCurrentConsecutiveDays >= 30,
@@ -169,36 +169,36 @@ export default function Home() {
       },
       {
         id: 'consecutive-60',
-        name: '60日間連続レジェンド',
-        description: '60日間連続でトレーニングを完了',
+        name: '60-Day Streak Legend',
+        description: 'Complete training for 60 consecutive days',
         emoji: '🏆',
         rarity: 'legendary',
         unlocked: mockCurrentConsecutiveDays >= 60,
         progress: mockCurrentConsecutiveDays,
         maxProgress: 60,
       },
-      // 週間1位バッジ
+      // Weekly Ranking Badges
       {
         id: 'weekly-champion',
-        name: '週間チャンピオン',
-        description: '週次ランキングで1位を獲得',
+        name: 'Weekly Champion',
+        description: 'Achieve 1st place in weekly ranking',
         emoji: '🥇',
         rarity: 'epic',
         unlocked: userRank === 1,
       },
       {
         id: 'weekly-top3',
-        name: '週間トップ3',
-        description: '週次ランキングで3位以内に入る',
+        name: 'Weekly Top 3',
+        description: 'Rank within top 3 in weekly ranking',
         emoji: '🥉',
         rarity: 'rare',
         unlocked: userRank !== null && userRank <= 3,
       },
-      // 累計トレーニング回数バッジ
+      // Total Workout Count Badges
       {
         id: 'workouts-10',
-        name: 'トレーニング初心者',
-        description: '累計10回のトレーニングを完了',
+        name: 'Training Novice',
+        description: 'Complete 10 total workouts',
         emoji: '💪',
         rarity: 'common',
         unlocked: mockTotalWorkouts >= 10,
@@ -207,8 +207,8 @@ export default function Home() {
       },
       {
         id: 'workouts-50',
-        name: 'トレーニング上級者',
-        description: '累計50回のトレーニングを完了',
+        name: 'Training Advanced',
+        description: 'Complete 50 total workouts',
         emoji: '💥',
         rarity: 'rare',
         unlocked: mockTotalWorkouts >= 50,
@@ -217,8 +217,8 @@ export default function Home() {
       },
       {
         id: 'workouts-100',
-        name: 'トレーニングマスター',
-        description: '累計100回のトレーニングを完了',
+        name: 'Training Master',
+        description: 'Complete 100 total workouts',
         emoji: '🎯',
         rarity: 'epic',
         unlocked: mockTotalWorkouts >= 100,
@@ -227,19 +227,19 @@ export default function Home() {
       },
       {
         id: 'workouts-500',
-        name: 'トレーニングレジェンド',
-        description: '累計500回のトレーニングを完了',
+        name: 'Training Legend',
+        description: 'Complete 500 total workouts',
         emoji: '🌟',
         rarity: 'legendary',
         unlocked: mockTotalWorkouts >= 500,
         progress: mockTotalWorkouts,
         maxProgress: 500,
       },
-      // 累計スコアバッジ
+      // Total Score Badges
       {
         id: 'score-10000',
-        name: 'スコアマイルストーン',
-        description: '累計スコア10,000pt達成',
+        name: 'Score Milestone',
+        description: 'Achieve 10,000pt total score',
         emoji: '⭐',
         rarity: 'common',
         unlocked: totalScore >= 10000,
@@ -248,8 +248,8 @@ export default function Home() {
       },
       {
         id: 'score-50000',
-        name: 'スコアチャンピオン',
-        description: '累計スコア50,000pt達成',
+        name: 'Score Champion',
+        description: 'Achieve 50,000pt total score',
         emoji: '✨',
         rarity: 'rare',
         unlocked: totalScore >= 50000,
@@ -258,27 +258,27 @@ export default function Home() {
       },
       {
         id: 'score-100000',
-        name: 'スコアレジェンド',
-        description: '累計スコア100,000pt達成',
+        name: 'Score Legend',
+        description: 'Achieve 100,000pt total score',
         emoji: '💫',
         rarity: 'epic',
         unlocked: totalScore >= 100000,
         progress: totalScore,
         maxProgress: 100000,
       },
-      // 貢献度バッジ
+      // Contribution Badges
       {
         id: 'contribution-hero',
-        name: '貢献ヒーロー',
-        description: `最も選手の応援度に貢献: ${maxContributionTrainer?.name || 'N/A'}`,
+        name: 'Contribution Hero',
+        description: `Most contribution to fighter support: ${maxContributionTrainer?.name || 'N/A'}`,
         emoji: '🦸',
         rarity: 'epic',
         unlocked: maxContributionTrainer !== null && (trainerContributions.get(maxContributionTrainer.id) || 0) > 0,
       },
       {
         id: 'trainer-supporter',
-        name: 'トレーナーサポーター',
-        description: 'すべてのトレーナーに貢献',
+        name: 'Trainer Supporter',
+        description: 'Contribute to all trainers',
         emoji: '🤝',
         rarity: 'rare',
         unlocked: trainerContributions.size >= trainers.length && trainers.length > 0,
@@ -288,15 +288,15 @@ export default function Home() {
     return badgesList;
   }, [mockCurrentConsecutiveDays, mockTotalWorkouts, userRank, totalScore, maxContributionTrainer, trainerContributions, trainers.length]);
 
-  // 獲得済みバッジ
+  // Unlocked badges
   const unlockedBadges = useMemo(() => {
     return rewardBadges.filter((b) => b.unlocked);
   }, [rewardBadges]);
 
-  // 累計バッジ数（REWARDSページと同じ）
+  // Total badge count (same as REWARDS page)
   const totalRewardBadges = unlockedBadges.length;
   
-  // 選択中のトレーナーの貢献度を計算
+  // Calculate contribution rate of selected trainer
   const calculateContribution = () => {
     if (!selectedTrainer) return 0;
     const totalTrainerScore = selectedTrainer.userScore + selectedTrainer.trainerScore;
@@ -328,7 +328,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* ヘッダー */}
+      {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -347,7 +347,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ナビゲーション */}
+      {/* Navigation */}
       <nav className="border-b border-gray-700 bg-gray-800/30">
         <div className="container mx-auto px-4">
           <div className="flex gap-4">
@@ -391,179 +391,179 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* メインコンテンツ */}
+      {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         {!address ? (
           <div className="space-y-8 py-8">
-            {/* ゲーム性の説明セクション */}
+            {/* Game Features Section */}
             <div className="max-w-4xl mx-auto space-y-8">
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-yellow-400 bg-clip-text text-transparent">
-                  ONE FIT HEROへようこそ！
+                  Welcome to ONE FIT HERO!
                 </h2>
                 <p className="text-xl text-gray-300 mb-2">
-                  ONE Championshipのファイターと一緒にトレーニングしよう
+                  Train together with ONE Championship fighters
                 </p>
               </div>
 
-              {/* ゲーム性の説明カード */}
+              {/* Game Features Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {/* トレーニングシステム */}
+                {/* Training System */}
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-primary/50">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">🏋️</span>
-                    <h3 className="text-2xl font-bold text-primary">トレーニングシステム</h3>
+                    <h3 className="text-2xl font-bold text-primary">Training System</h3>
                   </div>
                   <ul className="space-y-2 text-gray-300">
                     <li className="flex items-start gap-2">
                       <span className="text-yellow-400">•</span>
-                      <span>ONE Championshipファイターの動画を見ながらコピートレーニング</span>
+                      <span>Copy training while watching ONE Championship fighter videos</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-yellow-400">•</span>
-                      <span>AIコーチングでリアルタイムフィードバック</span>
+                      <span>Real-time feedback with AI coaching</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-yellow-400">•</span>
-                      <span>再現度100%で時間分のカロリーをそのままトークン獲得</span>
+                      <span>100% reproduction rate earns full time-based calories as tokens</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-yellow-400">•</span>
-                      <span>難易度別カロリー消費（初級8/分、中級12/分、上級18/分）</span>
+                      <span>Difficulty-based calorie burn (Beginner 8/min, Intermediate 12/min, Advanced 18/min)</span>
                     </li>
                   </ul>
                 </div>
 
-                {/* トレーナーシステム */}
+                {/* Trainer System */}
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-yellow-400/50">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">👤</span>
-                    <h3 className="text-2xl font-bold text-yellow-400">トレーナーシステム</h3>
+                    <h3 className="text-2xl font-bold text-yellow-400">Trainer System</h3>
                   </div>
                   <ul className="space-y-2 text-gray-300">
                     <li className="flex items-start gap-2">
                       <span className="text-primary">•</span>
-                      <span>Rodtang、Angela Lee、Chatriなどから選択</span>
+                      <span>Choose from Rodtang, Angela Lee, Chatri, and more</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary">•</span>
-                      <span>トレーナーNFTとして所有・育成</span>
+                      <span>Own and develop trainer NFTs</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary">•</span>
-                      <span>貢献度に応じてスコアが反映</span>
+                      <span>Scores reflect your contribution</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary">•</span>
-                      <span>リアルタイムランキングで競争</span>
+                      <span>Compete in real-time rankings</span>
                     </li>
                   </ul>
                 </div>
 
-                {/* バッジ・報酬システム */}
+                {/* Badge & Reward System */}
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-purple-500/50">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">🏅</span>
-                    <h3 className="text-2xl font-bold text-purple-400">バッジ・報酬システム</h3>
+                    <h3 className="text-2xl font-bold text-purple-400">Badge & Reward System</h3>
                   </div>
                   <ul className="space-y-2 text-gray-300">
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400">•</span>
-                      <span>連続トレーニング日数でバッジ獲得</span>
+                      <span>Earn badges for consecutive training days</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400">•</span>
-                      <span>ランキング上位入賞で特別バッジ</span>
+                      <span>Special badges for top rankings</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400">•</span>
-                      <span>累計スコアや回数で実績バッジ</span>
+                      <span>Achievement badges for total scores and counts</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400">•</span>
-                      <span>Common/Rare/Epic/Legendaryの4段階レアリティ</span>
+                      <span>Four-tier rarity: Common/Rare/Epic/Legendary</span>
                     </li>
                   </ul>
                 </div>
 
-                {/* トークン交換システム */}
+                {/* Token Exchange System */}
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-green-500/50">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">🎫</span>
-                    <h3 className="text-2xl font-bold text-green-400">トークン交換システム</h3>
+                    <h3 className="text-2xl font-bold text-green-400">Token Exchange System</h3>
                   </div>
                   <ul className="space-y-2 text-gray-300">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">•</span>
-                      <span>獲得トークンで抽選券を購入</span>
+                      <span>Purchase lottery tickets with earned tokens</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">•</span>
-                      <span>ONE Championship観戦チケット抽選</span>
+                      <span>ONE Championship event ticket lotteries</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">•</span>
-                      <span>スポンサー割引券を購入</span>
+                      <span>Buy sponsor discount coupons</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">•</span>
-                      <span>公式グッズ抽選に参加</span>
+                      <span>Participate in official merchandise lotteries</span>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              {/* ゲームの流れ */}
+              {/* Game Flow */}
               <div className="bg-gradient-to-r from-gray-800 via-gray-800 to-gray-900 rounded-lg p-8 border-2 border-gray-700">
-                <h3 className="text-2xl font-bold mb-6 text-center">🎮 ゲームの流れ</h3>
+                <h3 className="text-2xl font-bold mb-6 text-center">🎮 Game Flow</h3>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3 border-2 border-primary">
                       <span className="text-2xl">1️⃣</span>
                     </div>
-                    <h4 className="font-bold text-primary mb-2">ウォレット接続</h4>
-                    <p className="text-sm text-gray-400">Suiウォレットを接続</p>
+                    <h4 className="font-bold text-primary mb-2">Connect Wallet</h4>
+                    <p className="text-sm text-gray-400">Connect your Sui wallet</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-yellow-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-yellow-400">
                       <span className="text-2xl">2️⃣</span>
                     </div>
-                    <h4 className="font-bold text-yellow-400 mb-2">トレーナー選択</h4>
-                    <p className="text-sm text-gray-400">推しファイターを選択</p>
+                    <h4 className="font-bold text-yellow-400 mb-2">Select Trainer</h4>
+                    <p className="text-sm text-gray-400">Choose your favorite fighter</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-purple-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-purple-400">
                       <span className="text-2xl">3️⃣</span>
                     </div>
-                    <h4 className="font-bold text-purple-400 mb-2">トレーニング開始</h4>
-                    <p className="text-sm text-gray-400">AIコーチングで鍛える</p>
+                    <h4 className="font-bold text-purple-400 mb-2">Start Training</h4>
+                    <p className="text-sm text-gray-400">Train with AI coaching</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-green-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-green-400">
                       <span className="text-2xl">4️⃣</span>
                     </div>
-                    <h4 className="font-bold text-green-400 mb-2">トークン交換</h4>
-                    <p className="text-sm text-gray-400">抽選券や商品を購入</p>
+                    <h4 className="font-bold text-green-400 mb-2">Exchange Tokens</h4>
+                    <p className="text-sm text-gray-400">Purchase lottery tickets and goods</p>
                   </div>
                 </div>
               </div>
 
-              {/* ウォレット接続ボタン */}
+              {/* Wallet Connect Button */}
               <div className="text-center py-8 bg-gradient-to-r from-primary/10 via-yellow-400/10 to-primary/10 rounded-lg border-2 border-primary/30">
-                <h3 className="text-2xl font-bold mb-4">🚀 さあ、始めましょう！</h3>
+                <h3 className="text-2xl font-bold mb-4">🚀 Let's Get Started!</h3>
                 <p className="text-gray-300 mb-6">
-                  Suiウォレットを接続して、ONE FIT HEROの世界へ！
+                  Connect your Sui wallet and enter the world of ONE FIT HERO!
                 </p>
                 <WalletConnectButton />
                 <p className="text-sm text-gray-500 mt-4">
-                  ウォレットをお持ちでない場合: 
+                  Don't have a wallet?{' '}
                   <a 
                     href="https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-primary hover:underline ml-1"
                   >
-                    Sui Walletをインストール
+                    Install Sui Wallet
                   </a>
                 </p>
               </div>
@@ -571,42 +571,42 @@ export default function Home() {
           </div>
         ) : (
           <div className="space-y-8">
-            {/* ウォレットアドレス表示 */}
+            {/* Wallet Address Display */}
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-              <p className="text-sm text-gray-400">接続中のウォレット</p>
+              <p className="text-sm text-gray-400">Connected Wallet</p>
               <p className="text-lg font-mono text-primary">{address}</p>
             </div>
 
-            {/* Trainerカードと自分の記録を2列で表示 */}
+            {/* Trainer Card and My Records in 2 Columns */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* 左側: 選択中のトレーナー */}
+              {/* Left: Selected Trainer */}
               <div>
-                <h2 className="text-2xl font-bold mb-4">選択中のトレーナー</h2>
+                <h2 className="text-2xl font-bold mb-4">Selected Trainer</h2>
                 {selectedTrainer ? (
                   <TrainerCard trainer={selectedTrainer} rank={selectedTrainerRank} />
                 ) : (
                   <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 text-center">
-                    <p className="text-yellow-400 mb-4">トレーナーが選択されていません</p>
+                    <p className="text-yellow-400 mb-4">No trainer selected</p>
                     <Link
                       href="/trainers"
                       className="inline-block px-6 py-2 bg-primary hover:bg-primary-dark rounded-lg font-medium transition-colors"
                     >
-                      トレーナーを選択
+                      Select Trainer
                     </Link>
                   </div>
                 )}
               </div>
 
-              {/* 右側: 自分の記録 */}
+              {/* Right: My Records */}
               <div>
-                <h2 className="text-2xl font-bold mb-4">自分の記録</h2>
+                <h2 className="text-2xl font-bold mb-4">My Records</h2>
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-gray-700">
                   <div className="space-y-4">
-                    {/* 累計トレーニング回数 */}
+                    {/* Total Workout Count */}
                     <div className="pb-4 border-b border-gray-700">
                       <div className="flex justify-between items-center">
                         <div className="flex-1">
-                          <p className="text-sm text-gray-400 mb-1">累計トレーニング回数</p>
+                          <p className="text-sm text-gray-400 mb-1">Total Workouts</p>
                           <div className="flex items-baseline gap-2">
                             <motion.p
                               key={mockTotalWorkouts}
@@ -617,11 +617,11 @@ export default function Home() {
                             >
                               {mockTotalWorkouts.toLocaleString()}
                             </motion.p>
-                            <span className="text-lg text-gray-400">回</span>
+                            <span className="text-lg text-gray-400">times</span>
                           </div>
                           {mockTotalWorkouts > 0 && (
                             <p className="text-xs text-gray-500 mt-1">
-                              {mockWeeklyWorkouts}回（直近7日間）
+                              {mockWeeklyWorkouts} times (last 7 days)
                             </p>
                           )}
                         </div>
@@ -629,12 +629,12 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* 累計スコア */}
+                    {/* Total Score */}
                     <div className="pb-4 border-b border-gray-700">
-                      <p className="text-sm text-gray-400 mb-2">累計スコア</p>
+                      <p className="text-sm text-gray-400 mb-2">Total Score</p>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">あなたのスコア</span>
+                          <span className="text-gray-400">Your Score</span>
                           <motion.span
                             key={totalUserScore}
                             initial={{ scale: 1.1 }}
@@ -645,7 +645,7 @@ export default function Home() {
                           </motion.span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">トレーナーのスコア</span>
+                          <span className="text-gray-400">Trainer Score</span>
                           <motion.span
                             key={totalTrainerScore}
                             initial={{ scale: 1.1 }}
@@ -656,7 +656,7 @@ export default function Home() {
                           </motion.span>
                         </div>
                         <div className="flex justify-between pt-2 border-t border-gray-700">
-                          <span className="font-medium">合計スコア</span>
+                          <span className="font-medium">Total Score</span>
                           <motion.span
                             key={totalScore}
                             initial={{ scale: 1.1 }}
@@ -669,10 +669,10 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* ランキング順位 */}
+                    {/* Ranking Position */}
                     {userRank && (
                       <div>
-                        <p className="text-sm text-gray-400 mb-1">週次ランキング</p>
+                        <p className="text-sm text-gray-400 mb-1">Weekly Ranking</p>
                         <motion.p
                           key={userRank}
                           initial={{ scale: 1.2, color: "#FEF3C7" }}
@@ -680,14 +680,14 @@ export default function Home() {
                           transition={{ duration: 0.3 }}
                           className="text-3xl font-bold text-yellow-400"
                         >
-                          #{userRank}位
+                          #{userRank}
                         </motion.p>
                       </div>
                     )}
 
-                    {/* 累計バッジ数（REWARDSページと同じ） */}
+                    {/* Total Badge Count (same as REWARDS page) */}
                     <div className="pb-4 border-b border-gray-700">
-                      <p className="text-sm text-gray-400 mb-1">累計バッジ数</p>
+                      <p className="text-sm text-gray-400 mb-1">Total Badges</p>
                       <motion.p
                         key={totalRewardBadges}
                         initial={{ scale: 1.2, color: "#FEE2E2" }}
@@ -695,14 +695,14 @@ export default function Home() {
                         transition={{ duration: 0.3 }}
                         className="text-3xl font-bold text-primary"
                       >
-                        {totalRewardBadges}個
+                        {totalRewardBadges}
                       </motion.p>
                     </div>
 
-                    {/* 連続トレーニング日数 */}
+                    {/* Consecutive Training Days */}
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm text-gray-400 mb-1">現在の連続トレーニング</p>
+                        <p className="text-sm text-gray-400 mb-1">Current Consecutive Days</p>
                         <div className="flex items-baseline gap-2">
                           <motion.p
                             key={mockCurrentConsecutiveDays}
@@ -713,20 +713,20 @@ export default function Home() {
                           >
                             {mockCurrentConsecutiveDays}
                           </motion.p>
-                          <span className="text-lg text-gray-400">日</span>
+                          <span className="text-lg text-gray-400">days</span>
                         </div>
                         {mockCurrentConsecutiveDays > 0 ? (
                           <p className="text-xs text-green-400 mt-1 flex items-center gap-1">
                             <span>🔥</span>
-                            <span>現在連続中！</span>
+                            <span>Currently on streak!</span>
                           </p>
                         ) : (
-                          <p className="text-xs text-gray-500 mt-1">連続記録なし</p>
+                          <p className="text-xs text-gray-500 mt-1">No streak record</p>
                         )}
                       </div>
                       
                       <div className="pt-3 border-t border-gray-700">
-                        <p className="text-sm text-gray-400 mb-1">最長連続トレーニング</p>
+                        <p className="text-sm text-gray-400 mb-1">Longest Consecutive Days</p>
                         <div className="flex items-baseline gap-2">
                           <motion.p
                             key={mockMaxConsecutiveDays}
@@ -736,11 +736,11 @@ export default function Home() {
                           >
                             {mockMaxConsecutiveDays}
                           </motion.p>
-                          <span className="text-base text-gray-400">日</span>
+                          <span className="text-base text-gray-400">days</span>
                         </div>
                         {mockMaxConsecutiveDays > 0 && (
                           <p className="text-xs text-gray-500 mt-1">
-                            最高記録: {mockMaxConsecutiveDays}日間
+                            Best record: {mockMaxConsecutiveDays} days
                           </p>
                         )}
                       </div>
@@ -750,9 +750,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 今日のワークアウト状況 */}
+            {/* Today's Workout Status */}
             <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-bold mb-4">今日のワークアウト</h2>
+              <h2 className="text-xl font-bold mb-4">Today's Workout</h2>
               <div className="flex items-center gap-4">
                 <div
                   className={`w-4 h-4 rounded-full ${
@@ -760,15 +760,15 @@ export default function Home() {
                   }`}
                 />
                 <p className="text-lg">
-                  {todayBadgeCompleted ? "完了" : "未完了"}
+                  {todayBadgeCompleted ? "Completed" : "Not Completed"}
                 </p>
               </div>
             </div>
 
-            {/* 累計バッジ数とトークン */}
+            {/* Total Badge Count and Tokens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-                <h2 className="text-xl font-bold mb-2">累計バッジ数</h2>
+                <h2 className="text-xl font-bold mb-2">Total Badges</h2>
                 <motion.p
                   key={totalRewardBadges}
                   initial={{ scale: 1.2, color: "#FEE2E2" }}
@@ -778,10 +778,10 @@ export default function Home() {
                 >
                   {totalRewardBadges}
                 </motion.p>
-                <p className="text-sm text-gray-400 mt-2">REWARDSバッジ獲得数</p>
+                <p className="text-sm text-gray-400 mt-2">REWARDS badges earned</p>
               </div>
               <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-                <h2 className="text-xl font-bold mb-2">所持トークン</h2>
+                <h2 className="text-xl font-bold mb-2">Token Balance</h2>
                 <motion.p
                   key={tokenAmount}
                   initial={{ scale: 1.2, color: "#FEF3C7" }}
@@ -791,33 +791,33 @@ export default function Home() {
                 >
                   {tokenAmount.toLocaleString()}
                 </motion.p>
-                <p className="text-sm text-gray-400 mt-2">交換可能なトークン</p>
-                {/* 開発用: 20,000トークン付与ボタン */}
+                <p className="text-sm text-gray-400 mt-2">Exchangeable tokens</p>
+                {/* Development: Grant 20,000 tokens button */}
                 <button
                   onClick={() => {
                     addTokens(20000);
-                    toast.success('20,000トークンを付与しました！', {
+                    toast.success('Granted 20,000 tokens!', {
                       icon: '💰',
                       duration: 3000,
                     });
                   }}
                   className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors"
                 >
-                  +20,000トークン付与（開発用）
+                  +20,000 Tokens (Dev)
                 </button>
               </div>
             </div>
 
-            {/* 獲得したバッジ一覧 */}
+            {/* Earned Badges List */}
             {unlockedBadges.length > 0 && (
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-bold">獲得したバッジ</h2>
+                  <h2 className="text-2xl font-bold">Earned Badges</h2>
                   <Link
                     href="/rewards"
                     className="text-sm text-primary hover:underline"
                   >
-                    すべて見る →
+                    View All →
                   </Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -849,25 +849,25 @@ export default function Home() {
               </div>
             )}
 
-            {/* クイックアクション */}
+            {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link
                 href="/workout"
                 className="bg-primary hover:bg-primary-dark rounded-lg p-6 text-center font-bold text-lg transition-colors"
               >
-                ワークアウトを開始
+                Start Workout
               </Link>
               <Link
                 href="/ranking"
                 className="bg-secondary hover:bg-secondary-light rounded-lg p-6 text-center font-bold text-lg transition-colors"
               >
-                ランキングを見る
+                View Ranking
               </Link>
               <Link
                 href="/exchange"
                 className="bg-yellow-600 hover:bg-yellow-700 rounded-lg p-6 text-center font-bold text-lg transition-colors"
               >
-                トークン交換
+                Exchange Tokens
               </Link>
             </div>
           </div>

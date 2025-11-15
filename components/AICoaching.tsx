@@ -11,19 +11,19 @@ interface CoachingMessage {
   emoji?: string;
 }
 
-// モックAIコーチングメッセージ（時間ベース）
+// Mock AI coaching messages (time-based)
 const coachingMessages: CoachingMessage[] = [
-  { time: 0, message: 'トレーニング開始！準備はいいですか？', type: 'instruction', emoji: '🚀' },
-  { time: 5, message: '姿勢を正して、しっかりと立ってください', type: 'correction', emoji: '👆' },
-  { time: 10, message: '素晴らしい！その調子です！', type: 'encouragement', emoji: '💪' },
-  { time: 15, message: '呼吸を意識して、深く息を吸ってください', type: 'instruction', emoji: '🌬️' },
-  { time: 20, message: 'いいフォームです！続けましょう', type: 'encouragement', emoji: '🔥' },
-  { time: 30, message: '少し休憩して、水分補給を忘れずに', type: 'instruction', emoji: '💧' },
-  { time: 40, message: 'あと少し！頑張って！', type: 'motivation', emoji: '⚡' },
-  { time: 50, message: '完璧なフォームです！そのまま続けてください', type: 'encouragement', emoji: '⭐' },
-  { time: 60, message: '素晴らしい！もう半分終わりました！', type: 'motivation', emoji: '🎉' },
-  { time: 90, message: '最後の追い込みです！全力で！', type: 'motivation', emoji: '💥' },
-  { time: 120, message: '素晴らしい集中力です！あと少し！', type: 'encouragement', emoji: '🔥' },
+  { time: 0, message: 'Training starts! Are you ready?', type: 'instruction', emoji: '🚀' },
+  { time: 5, message: 'Stand straight and firm', type: 'correction', emoji: '👆' },
+  { time: 10, message: 'Great! Keep it up!', type: 'encouragement', emoji: '💪' },
+  { time: 15, message: 'Focus on breathing, take a deep breath', type: 'instruction', emoji: '🌬️' },
+  { time: 20, message: 'Perfect form! Keep going', type: 'encouragement', emoji: '🔥' },
+  { time: 30, message: 'Take a short break and hydrate', type: 'instruction', emoji: '💧' },
+  { time: 40, message: 'Almost there! Keep pushing!', type: 'motivation', emoji: '⚡' },
+  { time: 50, message: 'Perfect form! Continue like this', type: 'encouragement', emoji: '⭐' },
+  { time: 60, message: 'Amazing! You\'re halfway through!', type: 'motivation', emoji: '🎉' },
+  { time: 90, message: 'Final push! Give it your all!', type: 'motivation', emoji: '💥' },
+  { time: 120, message: 'Excellent focus! Almost there!', type: 'encouragement', emoji: '🔥' },
 ];
 
 const messageTypeColors = {
@@ -37,8 +37,8 @@ interface AICoachingProps {
   workoutTime: number; // 秒
   isActive: boolean;
   onClose?: () => void;
-  onReproductionRateChange?: (rate: number) => void; // 再現度の変化を通知
-  onGetReproductionRate?: () => number; // 現在の再現度を取得
+  onReproductionRateChange?: (rate: number) => void; // Notify reproduction rate changes
+  onGetReproductionRate?: () => number; // Get current reproduction rate
 }
 
 export function AICoaching({ 
@@ -54,26 +54,26 @@ export function AICoaching({
   const [currentMessage, setCurrentMessage] = useState<CoachingMessage | null>(null);
   const [showMessage, setShowMessage] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
-  const [reproductionRate, setReproductionRate] = useState<number>(100); // 再現度（0-100%）
+  const [reproductionRate, setReproductionRate] = useState<number>(100); // Reproduction rate (0-100%)
 
-  // AIによる再現度判定（モック）
+  // AI reproduction rate evaluation (mock)
   const calculateReproductionRate = useCallback(() => {
-    // モック実装: 常に100%を返す
-    // 実際の実装では、カメラ映像を解析してトレーナーの動きとの一致度を計算
+    // Mock implementation: Always returns 100%
+    // Actual implementation would analyze camera footage and calculate match rate with trainer's movements
     return 100;
   }, []);
 
-  // 再現度を親コンポーネントに公開
+  // Expose reproduction rate to parent component
   useEffect(() => {
     if (isActive) {
-      // トレーニング開始時に再現度を100%に設定（モック）
+      // Set reproduction rate to 100% when training starts (mock)
       const rate = calculateReproductionRate();
       setReproductionRate(rate);
       if (onReproductionRateChange) {
         onReproductionRateChange(rate);
       }
     } else {
-      // トレーニング停止時に再現度をリセット
+      // Reset reproduction rate when training stops
       setReproductionRate(100);
       if (onReproductionRateChange) {
         onReproductionRateChange(100);
@@ -81,14 +81,14 @@ export function AICoaching({
     }
   }, [isActive, calculateReproductionRate, onReproductionRateChange]);
 
-  // カメラを起動
+  // Start camera
   const startCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 640 },
           height: { ideal: 480 },
-          facingMode: 'user', // フロントカメラ
+          facingMode: 'user', // Front camera
         },
         audio: false,
       });
@@ -100,9 +100,9 @@ export function AICoaching({
         setCameraError(null);
       }
     } catch (error) {
-      console.error('カメラアクセスエラー:', error);
-      setCameraError('カメラにアクセスできませんでした');
-      toast.error('カメラにアクセスできませんでした', {
+      console.error('Camera access error:', error);
+      setCameraError('Unable to access camera');
+      toast.error('Unable to access camera', {
         icon: '📷',
         duration: 3000,
       });
@@ -110,7 +110,7 @@ export function AICoaching({
     }
   }, []);
 
-  // カメラを停止
+  // Stop camera
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -122,7 +122,7 @@ export function AICoaching({
     }
   }, []);
 
-  // カメラの起動/停止
+  // Start/stop camera
   useEffect(() => {
     if (isActive) {
       startCamera();
@@ -135,7 +135,7 @@ export function AICoaching({
     };
   }, [isActive, startCamera, stopCamera]);
 
-  // トレーニング時間に基づいてコーチングメッセージを表示
+  // Display coaching messages based on training time
   useEffect(() => {
     if (!isActive) {
       setCurrentMessage(null);
@@ -143,16 +143,16 @@ export function AICoaching({
       return;
     }
 
-    // 現在の時間に最も近いメッセージを見つける
+    // Find message closest to current time
     const activeMessage = coachingMessages
-      .filter((msg) => workoutTime >= msg.time && workoutTime < msg.time + 5) // 5秒間表示
+      .filter((msg) => workoutTime >= msg.time && workoutTime < msg.time + 5) // Display for 5 seconds
       .sort((a, b) => b.time - a.time)[0];
 
     if (activeMessage && activeMessage !== currentMessage) {
       setCurrentMessage(activeMessage);
       setShowMessage(true);
       
-      // 5秒後にメッセージを非表示
+      // Hide message after 5 seconds
       const timer = setTimeout(() => {
         setShowMessage(false);
       }, 5000);
@@ -169,7 +169,7 @@ export function AICoaching({
 
   return (
     <div className="relative bg-gray-900/95 rounded-lg border-2 border-primary overflow-hidden">
-      {/* カメラ映像 */}
+      {/* Camera feed */}
       <div className="relative w-full aspect-video bg-gray-800">
         {cameraError ? (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
@@ -180,7 +180,7 @@ export function AICoaching({
                 onClick={startCamera}
                 className="px-4 py-2 bg-primary hover:bg-primary-dark rounded-lg text-sm font-medium transition-colors"
               >
-                カメラを再試行
+                Retry Camera
               </button>
             </div>
           </div>
@@ -194,27 +194,27 @@ export function AICoaching({
           />
         )}
 
-        {/* カメラステータス */}
+        {/* Camera status */}
         {isCameraOn && (
           <div className="absolute top-2 left-2 flex items-center gap-2 bg-red-600/80 px-3 py-1 rounded-full">
             <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-            <span className="text-xs font-bold text-white">録画中</span>
+            <span className="text-xs font-bold text-white">Recording</span>
           </div>
         )}
 
-        {/* 閉じるボタン */}
+        {/* Close button */}
         {onClose && (
           <button
             onClick={onClose}
             className="absolute top-2 right-2 bg-gray-800/80 hover:bg-gray-700 rounded-full p-2 transition-colors"
-            aria-label="カメラを閉じる"
+            aria-label="Close camera"
           >
             <span className="text-white text-xl">×</span>
           </button>
         )}
       </div>
 
-      {/* AIコーチングメッセージ */}
+      {/* AI coaching message */}
       <AnimatePresence>
         {showMessage && currentMessage && (
           <motion.div
@@ -229,7 +229,7 @@ export function AICoaching({
                 <span className="text-2xl flex-shrink-0">{currentMessage.emoji}</span>
               )}
               <div className="flex-1">
-                <p className="font-bold text-sm mb-1">AIコーチ</p>
+                <p className="font-bold text-sm mb-1">AI Coach</p>
                 <p className="text-base leading-relaxed">{currentMessage.message}</p>
               </div>
             </div>
@@ -237,11 +237,11 @@ export function AICoaching({
         )}
       </AnimatePresence>
 
-      {/* 再現度表示 */}
+      {/* Reproduction rate display */}
       <div className="p-4 bg-gray-800/50 border-t border-gray-700">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-bold text-gray-300">AI判定: 再現度</p>
+            <p className="text-sm font-bold text-gray-300">AI Evaluation: Reproduction Rate</p>
             <span className="text-lg font-bold text-green-400 min-w-[4rem] text-right">
               {reproductionRate.toFixed(0)}%
             </span>
@@ -257,16 +257,16 @@ export function AICoaching({
           {reproductionRate >= 100 && (
             <p className="text-sm text-green-400 mt-1 flex items-center gap-1">
               <span>✨</span>
-              <span>完璧な再現度です！時間分のカロリーをそのまま付与します</span>
+              <span>Perfect reproduction rate! Full time-based calories will be awarded</span>
             </p>
           )}
         </div>
       </div>
 
-      {/* コーチングメッセージタイムライン */}
+      {/* Coaching message timeline */}
       <div className="p-4 bg-gray-800/50 border-t border-gray-700">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-xs text-gray-400">AIコーチングメッセージ</p>
+          <p className="text-xs text-gray-400">AI Coaching Messages</p>
           <p className="text-xs text-gray-400">
             {coachingMessages.filter((msg) => msg.time <= workoutTime).length} / {coachingMessages.length}
           </p>

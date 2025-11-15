@@ -62,7 +62,7 @@ export default function RankingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* ヘッダー */}
+      {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -79,7 +79,7 @@ export default function RankingPage() {
         </div>
       </header>
 
-      {/* ナビゲーション */}
+      {/* Navigation */}
       <nav className="border-b border-gray-700 bg-gray-800/30">
         <div className="container mx-auto px-4">
           <div className="flex gap-4">
@@ -123,53 +123,53 @@ export default function RankingPage() {
         </div>
       </nav>
 
-      {/* メインコンテンツ */}
+      {/* Main content */}
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-8">週次ランキング</h2>
+        <h2 className="text-3xl font-bold mb-8">Weekly Ranking</h2>
 
         {!address ? (
           <div className="text-center py-20">
             <p className="text-gray-400 mb-8">
-              ウォレットを接続してランキングを確認してください
+              Please connect your wallet to view the ranking
             </p>
             <WalletConnectButton />
           </div>
         ) : (
           <div className="space-y-8">
-            {/* ユーザーのランキング情報 */}
+            {/* User ranking information */}
             {userRank && (
               <div className="bg-primary/20 border-2 border-primary rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-2">あなたの順位</h3>
+                <h3 className="text-xl font-bold mb-2">Your Rank</h3>
                 <p className="text-4xl font-bold text-primary">#{userRank}</p>
                 {hasPrizeTicket && (
                   <div className="mt-4">
                     <p className="text-green-400 font-medium">
-                      🎉 おめでとうございます！Prize Ticketを獲得しました！
+                      🎉 Congratulations! You earned a Prize Ticket!
                     </p>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Prize Ticket表示 */}
+            {/* Prize Ticket display */}
             {hasPrizeTicket && (
               <div>
-                <h3 className="text-xl font-bold mb-4">獲得したPrize Ticket</h3>
+                <h3 className="text-xl font-bold mb-4">Earned Prize Ticket</h3>
                 <PrizeTicketCard />
               </div>
             )}
 
-            {/* ランキングセクション */}
+            {/* Ranking section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-bold mb-4">ユーザーランキング</h3>
+                <h3 className="text-xl font-bold mb-4">User Ranking</h3>
                 <RankingList />
               </div>
               {trainerLeaderboard.length > 0 && (
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-bold">選手リアルタイムランキング</h3>
-                    <p className="text-sm text-gray-400">5秒ごとに更新されます</p>
+                    <h3 className="text-xl font-bold">Player Real-time Ranking</h3>
+                    <p className="text-sm text-gray-400">Updates every 5 seconds</p>
                   </div>
                   <div className="space-y-4">
                     {trainerLeaderboard.map((trainer, index) => (
@@ -209,20 +209,20 @@ export default function RankingPage() {
                                   </span>
                                 </p>
                                 <p className="text-xs text-gray-400">
-                                  あなたのスコア: {trainer.userScore.toLocaleString()}pt
+                                  Your Score: {trainer.userScore.toLocaleString()}pt
                                 </p>
                               </div>
                               <div className="text-right">
                                 <p className="text-lg font-bold text-primary">
                                   {trainer.liveScore.toLocaleString()}pt
                                 </p>
-                                <p className="text-xs text-gray-400">累計スコア</p>
+                                <p className="text-xs text-gray-400">Total Score</p>
                               </div>
                             </div>
 
                             <div className="mt-3">
                               <div className="flex justify-between text-xs text-gray-400 mb-1">
-                                <span>貢献度</span>
+                                <span>Contribution</span>
                                 <span>{trainer.userContributionPercent}%</span>
                               </div>
                               <div className="w-full bg-gray-700 rounded-full h-2">

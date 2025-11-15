@@ -7,7 +7,7 @@ import { WorkoutPanel } from "@/components/WorkoutPanel";
 export default function WorkoutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* ヘッダー */}
+      {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -24,7 +24,7 @@ export default function WorkoutPage() {
         </div>
       </header>
 
-      {/* ナビゲーション */}
+      {/* Navigation */}
       <nav className="border-b border-gray-700 bg-gray-800/30">
         <div className="container mx-auto px-4">
           <div className="flex gap-4">
@@ -68,9 +68,9 @@ export default function WorkoutPage() {
         </div>
       </nav>
 
-      {/* メインコンテンツ */}
+      {/* Main content */}
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-8">ワークアウト</h2>
+        <h2 className="text-3xl font-bold mb-8">WORKOUT</h2>
         <WorkoutPanel />
       </main>
     </div>

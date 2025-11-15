@@ -4,29 +4,29 @@ import { WorkoutDifficulty } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
-// 難易度ごとの動画URL（実際の動画URLに置き換えてください）
-// ローカル動画ファイルを使用する場合: /videos/beginner-workout.mp4
-// 外部URLを使用する場合: https://example.com/videos/beginner-workout.mp4
+// Video URLs for each difficulty (replace with actual video URLs)
+// For local video files: /videos/beginner-workout.mp4
+// For external URLs: https://example.com/videos/beginner-workout.mp4
 const workoutVideos: Record<WorkoutDifficulty, string> = {
-  beginner: '/videos/beginner-workout.mp4', // 実際の動画URLに置き換え
-  intermediate: '/videos/intermediate-workout.mp4', // 実際の動画URLに置き換え
-  advanced: '/videos/advanced-workout.mp4', // 実際の動画URLに置き換え
+  beginner: '/videos/beginner-workout.mp4', // Replace with actual video URL
+  intermediate: '/videos/intermediate-workout.mp4', // Replace with actual video URL
+  advanced: '/videos/advanced-workout.mp4', // Replace with actual video URL
 };
 
-// YouTube埋め込み用の動画ID
-// YouTube動画のURLから取得: https://www.youtube.com/watch?v=VIDEO_ID
-// 例: https://www.youtube.com/watch?v=dQw4w9WgXcQ → 'dQw4w9WgXcQ'
+// YouTube video IDs for embedding
+// Extract from YouTube video URL: https://www.youtube.com/watch?v=VIDEO_ID
+// Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ → 'dQw4w9WgXcQ'
 const youtubeVideoIds: Record<WorkoutDifficulty, string> = {
-  beginner: 'jNQXAC9IVRw', // 初級トレーニング動画のIDに置き換え
-  intermediate: 'jNQXAC9IVRw', // 中級トレーニング動画のIDに置き換え
-  advanced: 'jNQXAC9IVRw', // 上級トレーニング動画のIDに置き換え
+  beginner: 'jNQXAC9IVRw', // Replace with beginner training video ID
+  intermediate: 'jNQXAC9IVRw', // Replace with intermediate training video ID
+  advanced: 'jNQXAC9IVRw', // Replace with advanced training video ID
 };
 
-// 難易度ラベル
+// Difficulty labels
 const difficultyLabels: Record<WorkoutDifficulty, { label: string }> = {
-  beginner: { label: '初級' },
-  intermediate: { label: '中級' },
-  advanced: { label: '上級' },
+  beginner: { label: 'Beginner' },
+  intermediate: { label: 'Intermediate' },
+  advanced: { label: 'Advanced' },
 };
 
 export type VideoState = 'idle' | 'playing' | 'paused' | 'ended';
@@ -44,19 +44,19 @@ export function WorkoutVideoPlayer({
   onVideoEnd,
   onVideoStateChange 
 }: WorkoutVideoPlayerProps) {
-  const [useYouTube, setUseYouTube] = useState(true); // YouTube埋め込みを使用するか
-  const [isMounted, setIsMounted] = useState(false); // Hydrationエラー対策
+  const [useYouTube, setUseYouTube] = useState(true); // Use YouTube embedding
+  const [isMounted, setIsMounted] = useState(false); // Hydration error prevention
   const [videoState, setVideoState] = useState<VideoState>('idle');
   const videoRef = useRef<HTMLVideoElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const stateCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // クライアントサイドでのマウント状態を確認（Hydrationエラー対策）
+  // Check mount state on client-side (Hydration error prevention)
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // 動画の状態を監視して親コンポーネントに通知
+  // Monitor video state and notify parent component
   useEffect(() => {
     if (!videoRef.current || useYouTube) return;
 
@@ -91,14 +91,14 @@ export function WorkoutVideoPlayer({
     };
 
     const handleTimeUpdate = () => {
-      // 動画の実際の状態を確認（pausedプロパティを使用）
+      // Check actual video state (using paused property)
       const currentState: VideoState = video.ended 
         ? 'ended'
         : video.paused 
         ? 'paused'
         : 'playing';
       
-      // 状態を更新
+      // Update state
       setVideoState((prevState) => {
         if (prevState !== currentState) {
           return currentState;
@@ -106,25 +106,25 @@ export function WorkoutVideoPlayer({
         return prevState;
       });
 
-      // 時間を常に親コンポーネントに通知（状態に関係なく）
+      // Always notify parent component of time (regardless of state)
       if (onVideoStateChange) {
         onVideoStateChange(currentState, video.currentTime, video.duration || 0);
       }
     };
 
-      // 動画のメタデータが読み込まれた後に、定期的に時間を更新
+      // Update time periodically after video metadata is loaded
       const handleLoadedMetadata = () => {
         if (onVideoStateChange) {
           const state: VideoState = video.paused ? 'paused' : 'idle';
           onVideoStateChange(state, video.currentTime, video.duration || 0);
         }
 
-        // 動画が再生中の場合、定期的に時間を更新（timeupdateイベントが発火しない場合に備える）
+        // Update time periodically when video is playing (in case timeupdate event doesn't fire)
         if (timeUpdateInterval) {
           clearInterval(timeUpdateInterval);
         }
         
-        // 常にインターバルを設定（再生状態に関係なく）
+        // Always set interval (regardless of playback state)
         timeUpdateInterval = setInterval(() => {
           if (video && !isNaN(video.currentTime)) {
             const currentState: VideoState = video.ended 
@@ -137,10 +137,10 @@ export function WorkoutVideoPlayer({
               onVideoStateChange(currentState, video.currentTime, video.duration || 0);
             }
           }
-        }, 100); // 100msごとに更新
+        }, 100); // Update every 100ms
       };
 
-    // 初期状態を設定
+    // Set initial state
     const initialState: VideoState = video.paused 
       ? (video.ended ? 'ended' : 'paused')
       : 'idle';
@@ -152,7 +152,7 @@ export function WorkoutVideoPlayer({
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-    // 既にメタデータが読み込まれている場合
+    // If metadata is already loaded
     if (video.readyState >= 1) {
       handleLoadedMetadata();
     }
@@ -169,22 +169,22 @@ export function WorkoutVideoPlayer({
     };
   }, [useYouTube, onVideoStateChange, onVideoEnd]);
 
-  // YouTube埋め込みの場合の状態監視（PostMessage APIを使用）
+  // State monitoring for YouTube embedding (using PostMessage API)
   useEffect(() => {
     if (useYouTube && iframeRef.current) {
       let youtubeTime = 0;
       let startTime: number | null = null;
       let pauseTime = 0;
 
-      // YouTube埋め込みの場合は、簡易的に経過時間をカウント
+      // For YouTube embedding, simply count elapsed time
       const checkYouTubeState = () => {
         if (isPlaying && onVideoStateChange && startTime !== null) {
-          // 経過時間を計算（秒単位）
+          // Calculate elapsed time (in seconds)
           const elapsed = (Date.now() - startTime) / 1000;
           youtubeTime = pauseTime + elapsed;
           onVideoStateChange('playing', youtubeTime, 0);
         } else if (!isPlaying && onVideoStateChange) {
-          // 一時停止時は現在の時間を保持
+          // Keep current time when paused
           if (startTime !== null) {
             pauseTime = pauseTime + (Date.now() - startTime) / 1000;
             startTime = null;
@@ -194,12 +194,12 @@ export function WorkoutVideoPlayer({
       };
 
       if (isPlaying) {
-        // 再生開始時
+        // When playback starts
         if (startTime === null) {
           startTime = Date.now();
         }
         stateCheckIntervalRef.current = setInterval(checkYouTubeState, 100);
-        // 即座に状態を通知
+        // Notify state immediately
         if (onVideoStateChange) {
           onVideoStateChange('playing', youtubeTime, 0);
         }
@@ -208,7 +208,7 @@ export function WorkoutVideoPlayer({
           clearInterval(stateCheckIntervalRef.current);
           stateCheckIntervalRef.current = null;
         }
-        // 一時停止時に現在の時間を通知
+        // Notify current time when paused
         if (onVideoStateChange) {
           if (startTime !== null) {
             pauseTime = pauseTime + (Date.now() - startTime) / 1000;
@@ -224,7 +224,7 @@ export function WorkoutVideoPlayer({
         }
       };
     } else {
-      // YouTube埋め込みでない場合、経過時間をリセット
+      // Reset elapsed time if not YouTube embedding
       if (stateCheckIntervalRef.current) {
         clearInterval(stateCheckIntervalRef.current);
         stateCheckIntervalRef.current = null;
@@ -240,7 +240,7 @@ export function WorkoutVideoPlayer({
     }
   }, [isPlaying, useYouTube]);
 
-  // YouTube埋め込みの場合、isPlayingが変更されたらiframeを再読み込み
+  // Reload iframe when isPlaying changes for YouTube embedding
   useEffect(() => {
     if (useYouTube && iframeRef.current && difficulty) {
       const youtubeId = youtubeVideoIds[difficulty];
@@ -256,7 +256,7 @@ export function WorkoutVideoPlayer({
       <div className="bg-gray-800/50 rounded-lg p-8 border border-gray-700 aspect-video flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">📹</div>
-          <p className="text-gray-400">難易度を選択すると動画が表示されます</p>
+          <p className="text-gray-400">Video will be displayed when difficulty is selected</p>
         </div>
       </div>
     );
@@ -278,7 +278,7 @@ export function WorkoutVideoPlayer({
             className="w-full h-full"
           >
             {useYouTube ? (
-              // YouTube埋め込み
+              // YouTube embedding
               <div className="relative w-full h-full rounded-lg overflow-hidden">
                 <iframe
                   ref={iframeRef}
@@ -290,7 +290,7 @@ export function WorkoutVideoPlayer({
                 />
               </div>
             ) : (
-              // HTML5動画プレーヤー
+              // HTML5 video player
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover rounded-lg"
@@ -300,24 +300,24 @@ export function WorkoutVideoPlayer({
                 playsInline
                 preload="metadata"
               >
-                お使いのブラウザは動画再生をサポートしていません。
+                Your browser does not support video playback.
               </video>
             )}
           </motion.div>
         </AnimatePresence>
       </div>
       
-      {/* 動画ソース切り替えボタン（開発用） */}
+      {/* Video source switch button (for development) */}
       {isMounted && (
         <div className="mt-2 flex justify-between items-center">
           <p className="text-xs text-gray-400">
-            難易度: <span className="font-medium text-white">{difficultyLabels[difficulty]?.label || difficulty}</span>
+            Difficulty: <span className="font-medium text-white">{difficultyLabels[difficulty]?.label || difficulty}</span>
           </p>
           <button
             onClick={() => setUseYouTube(!useYouTube)}
             className="text-xs text-gray-400 hover:text-gray-300 transition-colors px-2 py-1 rounded hover:bg-gray-700/50"
           >
-            {useYouTube ? '📁 ローカル動画' : '▶️ YouTube'}
+            {useYouTube ? '📁 Local Video' : '▶️ YouTube'}
           </button>
         </div>
       )}

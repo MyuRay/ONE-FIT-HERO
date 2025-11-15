@@ -46,7 +46,7 @@ export function RankingList() {
                       {formatAddress(entry.address)}
                     </p>
                     {isUser && (
-                      <span className="px-2 py-1 bg-primary text-xs rounded">あなた</span>
+                      <span className="px-2 py-1 bg-primary text-xs rounded">You</span>
                     )}
                     {entry.hasPrizeTicket && (
                       <span className="px-2 py-1 bg-yellow-600 text-xs rounded flex items-center gap-1">
@@ -55,13 +55,13 @@ export function RankingList() {
                     )}
                   </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    ワークアウト: {entry.totalWorkouts}回
+                    Workouts: {entry.totalWorkouts} times
                   </p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-primary">{entry.score}</p>
-                <p className="text-xs text-gray-400">スコア</p>
+                <p className="text-xs text-gray-400">Score</p>
               </div>
             </div>
           </motion.div>
@@ -70,7 +70,7 @@ export function RankingList() {
 
       {rankings.length === 0 && (
         <div className="text-center py-12 text-gray-400">
-          <p>ランキングデータがありません</p>
+          <p>No ranking data</p>
         </div>
       )}
     </div>

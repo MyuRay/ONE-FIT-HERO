@@ -37,17 +37,17 @@ export function WalletConnectButton() {
     try {
       if (isConnected) {
         await disconnect();
-        toast.success('ウォレットを切断しました');
+        toast.success('Wallet disconnected');
       } else {
-        // 利用可能なウォレットがあるかチェック
+        // Check if wallets are available
         if (wallets.length === 0) {
-          toast.error('Suiウォレットが見つかりません。Sui Wallet拡張機能をインストールしてください。');
+          toast.error('No Sui wallet found. Please install the Sui Wallet extension.');
           return;
         }
 
-        // ウォレットが1つだけの場合は直接接続、複数の場合は選択画面を表示
+        // If only one wallet, connect directly; if multiple, show selection screen
         if (wallets.length === 1) {
-          // 実装はWalletSelectorで行う
+          // Implementation is in WalletSelector
           setShowSelector(true);
         } else {
           setShowSelector(true);
@@ -55,23 +55,23 @@ export function WalletConnectButton() {
       }
     } catch (error) {
       console.error('Wallet connection error:', error);
-      toast.error('ウォレット接続に失敗しました');
+      toast.error('Failed to connect wallet');
     }
   };
 
-  // サーバーサイドレンダリング時は常にボタンを表示（Hydrationエラー対策）
+  // Always show button during server-side rendering (to prevent hydration errors)
   if (!isMounted) {
     return (
       <motion.button
         className="px-6 py-2 rounded-lg font-medium bg-primary hover:bg-primary-dark text-white transition-colors"
         disabled
       >
-        ウォレット接続
+        Connect Wallet
       </motion.button>
     );
   }
 
-  // クライアントサイドでのみ、ウォレットが利用できない場合の表示
+  // Only show on client side when wallet is not available
   if (wallets.length === 0 && !isConnected) {
     return (
       <div className="flex flex-col gap-2">
@@ -83,7 +83,7 @@ export function WalletConnectButton() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Sui Walletをインストール
+          Install Sui Wallet
         </motion.a>
         <motion.a
           href="https://slushwallet.com"
@@ -93,7 +93,7 @@ export function WalletConnectButton() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Slush Walletをインストール
+          Install Slush Wallet
         </motion.a>
       </div>
     );
@@ -114,10 +114,10 @@ export function WalletConnectButton() {
         {isConnected ? (
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-            ウォレット切断
+            Disconnect Wallet
           </span>
         ) : (
-          'ウォレット接続'
+          'Connect Wallet'
         )}
       </motion.button>
       <WalletSelector
