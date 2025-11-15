@@ -95,7 +95,7 @@ export function WalletSelector({ isOpen, onClose }: WalletSelectorProps) {
                     <div>
                       <p className="font-medium text-white">{wallet.name}</p>
                       <p className="text-sm text-gray-400">
-                        {wallet.installed ? 'インストール済み' : '未インストール'}
+                        インストール済み
                       </p>
                     </div>
                   </div>
