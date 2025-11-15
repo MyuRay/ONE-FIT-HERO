@@ -1,106 +1,127 @@
-# デプロイ手順
+# Deployment Guide
 
-## Vercelへのデプロイ
+## Deploy to Vercel
 
-### 方法1: Vercel Web UIを使用（推奨）
+### Method 1: Using Vercel Web UI (Recommended)
 
-1. **GitHubリポジトリにプッシュ済みの場合**
-   - リポジトリは既にGitHubにプッシュされています: `https://github.com/MyuRay/ONE-FIT-HERO`
+1. **If GitHub repository is already pushed**
+   - The repository is already pushed to GitHub: `https://github.com/MyuRay/ONE-FIT-HERO`
 
-2. **Vercelでプロジェクトを作成**
-   - [Vercel](https://vercel.com)にアクセスしてログイン（GitHubアカウントで連携推奨）
-   - "Add New Project"をクリック
-   - GitHubリポジトリ `MyuRay/ONE-FIT-HERO` を検索して選択
-   - プロジェクト設定：
-     - **Framework Preset**: Next.js（自動検出されます）
-     - **Root Directory**: `./`（デフォルト）
-     - **Build Command**: `npm run build`（デフォルト）
-     - **Output Directory**: `.next`（デフォルト）
-     - **Install Command**: `npm install`（デフォルト）
+2. **Create Project on Vercel**
+   - Access [Vercel](https://vercel.com) and log in (GitHub account integration recommended)
+   - Click "Add New Project"
+   - Search for and select GitHub repository `MyuRay/ONE-FIT-HERO`
+   - Project settings:
+     - **Framework Preset**: Next.js (auto-detected)
+     - **Root Directory**: `./` (default)
+     - **Build Command**: `npm run build` (default)
+     - **Output Directory**: `.next` (default)
+     - **Install Command**: `npm install` (default)
 
-3. **環境変数を設定**
-   - Vercelのプロジェクト設定 > Environment Variables で以下を追加：
-     - `NEXT_PUBLIC_SUI_NETWORK`: `devnet`（または`testnet`、`mainnet`）
-     - `NEXT_PUBLIC_SUI_PACKAGE_ID`: Sui MoveコントラクトのパッケージID（デプロイ後に取得）
-   - 環境変数は `Production`、`Preview`、`Development` すべてに適用することを推奨
+3. **Set Environment Variables**
+   - In Vercel project settings > Environment Variables, add the following:
+     - `NEXT_PUBLIC_SUI_NETWORK`: `devnet` (or `testnet`, `mainnet`)
+     - `NEXT_PUBLIC_SUI_PACKAGE_ID`: Sui Move contract package ID (obtain after deployment)
+   - It is recommended to apply environment variables to `Production`, `Preview`, and `Development` environments
 
-4. **デプロイ**
-   - "Deploy"ボタンをクリックしてデプロイを開始
-   - デプロイが完了すると、URLが生成されます（例: `https://one-fit-hero.vercel.app`）
+4. **Deploy**
+   - Click the "Deploy" button to start deployment
+   - Once deployment completes, a URL will be generated (e.g., `https://one-fit-hero.vercel.app`)
 
-### 方法2: Vercel CLIを使用
+### Method 2: Using Vercel CLI
 
-1. **Vercel CLIでログイン**
+1. **Login to Vercel CLI**
    ```bash
    vercel login
    ```
 
-2. **プロジェクトをリンク**
+2. **Link Project**
    ```bash
    vercel link
    ```
 
-3. **環境変数を設定**
+3. **Set Environment Variables**
    ```bash
    vercel env add NEXT_PUBLIC_SUI_NETWORK
    vercel env add NEXT_PUBLIC_SUI_PACKAGE_ID
    ```
 
-4. **プロダクション環境にデプロイ**
+4. **Deploy to Production**
    ```bash
    vercel --prod
    ```
 
-### 注意事項
+### Notes
 
-- 初回デプロイ後、Sui Moveコントラクトをデプロイして`NEXT_PUBLIC_SUI_PACKAGE_ID`を設定してください
-- 環境変数を設定しない場合、一部の機能が動作しません
+- After initial deployment, deploy the Sui Move contract and set `NEXT_PUBLIC_SUI_PACKAGE_ID`
+- Some features will not work if environment variables are not set
 
-## GitHubリポジトリへのプッシュ（完了済み）
+## Push to GitHub Repository (Completed)
 
-```bash
-# リモートリポジトリを追加（GitHubでリポジトリを作成後）
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git branch -M main
-git push -u origin main
-```
+The repository has been pushed to GitHub:
+- Repository URL: `https://github.com/MyuRay/ONE-FIT-HERO`
+- Branch: `main`
 
-### 2. Vercelでプロジェクトを作成
+## Sui Move Contract Deployment
 
-1. [Vercel](https://vercel.com)にログイン
-2. "Add New Project"をクリック
-3. GitHubリポジトリを選択
-4. プロジェクト設定：
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `./`（デフォルト）
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `.next`（デフォルト）
-
-### 3. 環境変数を設定
-
-Vercelのプロジェクト設定 > Environment Variables で以下を追加：
-
-- `NEXT_PUBLIC_SUI_NETWORK`: `devnet`（または`testnet`、`mainnet`）
-- `NEXT_PUBLIC_SUI_PACKAGE_ID`: Sui MoveコントラクトのパッケージID（デプロイ後に取得）
-
-### 4. デプロイ
-
-環境変数を設定後、"Deploy"ボタンをクリックしてデプロイを開始します。
-
-## Sui Moveコントラクトのデプロイ
-
-### 1. Sui CLIでコントラクトをデプロイ
+### 1. Deploy Contract with Sui CLI
 
 ```bash
 cd contracts
 sui client publish --gas-budget 100000000
 ```
 
-### 2. パッケージIDを取得
+### 2. Get Package ID
 
-デプロイ成功後、出力された`PackageID`をコピーして、Vercelの環境変数`NEXT_PUBLIC_SUI_PACKAGE_ID`に設定してください。
+After successful deployment, copy the outputted `PackageID` and set it in Vercel's environment variable `NEXT_PUBLIC_SUI_PACKAGE_ID`.
 
-### 3. 必要なガス代
+### 3. Required Gas Fees
 
-Devnetの場合は、[Sui Faucet](https://discord.com/invite/sui)からテスト用SUIを取得できます。
+For Devnet, you can obtain test SUI from the [Sui Faucet](https://discord.com/invite/sui).
 
+## Environment Variables
+
+### Required Environment Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_SUI_NETWORK` | Sui network to connect to | `devnet` |
+| `NEXT_PUBLIC_SUI_PACKAGE_ID` | Sui Move contract package ID | `0x...` |
+
+### Setting Environment Variables in Vercel
+
+1. Go to Project Settings > Environment Variables
+2. Click "Add New"
+3. Enter variable name and value
+4. Select environments (Production, Preview, Development)
+5. Click "Save"
+
+## Post-Deployment
+
+After deployment:
+
+1. Verify the application is accessible at the generated URL
+2. Test wallet connection functionality
+3. Deploy Sui Move contract (if not already deployed)
+4. Set `NEXT_PUBLIC_SUI_PACKAGE_ID` environment variable
+5. Redeploy to apply the new environment variable
+
+## Troubleshooting
+
+### Build Errors
+
+- Ensure all dependencies are properly installed
+- Check TypeScript compilation errors
+- Verify environment variables are set correctly
+
+### Runtime Errors
+
+- Check browser console for errors
+- Verify wallet connection is working
+- Ensure Sui network RPC endpoint is accessible
+
+### Contract Integration Issues
+
+- Verify `NEXT_PUBLIC_SUI_PACKAGE_ID` is set correctly
+- Check contract is deployed on the correct network
+- Ensure wallet is connected to the same network

@@ -1,361 +1,359 @@
 # ONE FIT HERO
 
-ONE Championshipのファイターを「トレーナー」として起用するバーチャルフィットネス × 育成ゲームのWeb DAppです。
+A virtual fitness × training game Web DApp featuring ONE Championship fighters as "trainers".
 
-## 🎮 概要
+## 🎮 Overview
 
-このプロジェクトは、Suiブロックチェーンを使用した動的NFT・SBT・報酬配布システムを実装したフィットネスDAppです。AIコーチング機能を搭載し、実際のトレーニング動画を見ながら、カメラで自分の動きを記録し、AI判定による再現度に基づいてスコアとトークンを獲得できます。
+This project is a fitness DApp that uses the Sui blockchain for dynamic NFTs, SBTs, and reward distribution. It features AI coaching functionality that records your movements through a camera and awards scores and tokens based on AI-determined reproduction accuracy.
 
-### ✨ 主な機能
+### ✨ Key Features
 
-#### 🏋️ トレーニングシステム
-- **動画トレーニング**: ONE Championshipのファイターのトレーニング動画を見ながら、コピートレーニングを実行
-- **AIコーチング**: カメラで自分の動きを記録し、リアルタイムでAIコーチングメッセージを受信
-- **再現度判定**: AI判定による再現度（0-100%）に基づいて、最終的な消費カロリーと獲得トークンを計算
-  - 再現度100%の場合、時間分のカロリーをそのままスコア・トークンとして付与
-  - 難易度別カロリー消費率: 初級（8kcal/分）、中級（12kcal/分）、上級（18kcal/分）
-- **カロリー = トークン**: 消費カロリーがそのまま獲得トークンに変換されるシンプルなシステム
+#### 🏋️ Training System
+- **Video Training**: Watch and copy train alongside ONE Championship fighter workout videos
+- **AI Coaching**: Record your movements with a camera and receive real-time AI coaching messages
+- **Reproduction Rate Evaluation**: Calculate final calorie consumption and earned tokens based on AI-determined reproduction rate (0-100%)
+  - 100% reproduction rate: Earn calories equal to training time as both score and tokens
+  - Difficulty-based calorie burn rates: Beginner (8 kcal/min), Intermediate (12 kcal/min), Advanced (18 kcal/min)
+- **Calories = Tokens**: A simple system where calories burned are directly converted to earned tokens
 
-#### 👤 トレーナーシステム
-- **Trainer NFT**: ONE Championshipのファイターをトレーナーとして選択し、NFTとして所有
-- **トレーナー育成**: ワークアウトを完了すると、選択中のトレーナーのスコアが向上
-- **貢献度システム**: 各トレーナーに対する自分の貢献スコアを表示し、ランキング形式で比較
-- **リアルタイムスコア更新**: トレーナーの累積スコアがリアルタイムで更新される（5秒ごと）
+#### 👤 Trainer System
+- **Trainer NFTs**: Select ONE Championship fighters as trainers and own them as NFTs
+- **Trainer Training**: Complete workouts to increase your selected trainer's score
+- **Contribution System**: View your contribution score for each trainer and compare in a ranking format
+- **Real-time Score Updates**: Trainer cumulative scores update in real-time (every 5 seconds)
 
-#### 🏅 バッジ・報酬システム
-- **Workout Badge (SBT)**: ワークアウト完了ごとにバッジが付与され、オンチェーンで記録
-- **REWARDSページ**: 多様なバッジを獲得できるシステム
-  - 連続トレーニング日数バッジ（7日、14日、30日、60日）
-  - 週間ランキングバッジ（1位、3位以内）
-  - 累計トレーニング回数バッジ（10回、50回、100回、500回）
-  - 累計スコアバッジ（10,000pt、50,000pt、100,000pt）
-  - 貢献度バッジ（貢献ヒーロー、トレーナーサポーター）
-- **レアリティシステム**: Common、Rare、Epic、Legendaryの4段階のレアリティ
+#### 🏅 Badge & Reward System
+- **Workout Badges (SBT)**: Badges are awarded for each completed workout and recorded on-chain
+- **REWARDS Page**: A system to earn various badges
+  - Consecutive training days badges (7, 14, 30, 60 days)
+  - Weekly ranking badges (1st place, top 3)
+  - Total workout count badges (10, 50, 100, 500 workouts)
+  - Total score badges (10,000pt, 50,000pt, 100,000pt)
+  - Contribution badges (Contribution Hero, Trainer Supporter)
+- **Rarity System**: Four tiers of rarity - Common, Rare, Epic, Legendary
 
-#### 📊 ランキングシステム
-- **ユーザーランキング**: 週次ランキングで自分の順位を確認
-- **リアルタイムランキング**: トレーナー別のリアルタイムスコアランキングを表示
-- **Prize Ticket NFT**: ランキング上位入賞者に抽選券NFTが付与される
+#### 📊 Ranking System
+- **User Ranking**: Check your ranking position in weekly rankings
+- **Real-time Ranking**: Display real-time score rankings by trainer
+- **Prize Ticket NFTs**: Lottery ticket NFTs are awarded to top ranking users
 
-#### 🎫 交換システム（EXCHANGE）
-- **抽選券**: トークンを消費して抽選券を購入
-  - ONE Championship 観戦チケット抽選券
-  - バックステージパス抽選券
-  - 公式Tシャツ抽選券
-  - トレーニンググローブ抽選券
-  - PPV抽選券
-- **商品**: スポンサー割引券やONE Championship公式グッズを購入
-  - スポンサー割引券（ジム、サプリメント、スポーツウェア、トレーニング器具など）
-  - ONE Championship公式グッズ（タオル、マグカップ、ボトル、ステッカーセット）
+#### 🎫 Exchange System (EXCHANGE)
+- **Lottery Tickets**: Use tokens to purchase lottery tickets
+  - ONE Championship event ticket lottery
+  - Backstage pass lottery
+  - Official T-shirt lottery
+  - Training gloves lottery
+  - PPV lottery
+- **Goods**: Purchase sponsor discount coupons and ONE Championship official goods
+  - Sponsor discount coupons (gyms, supplements, sportswear, training equipment, etc.)
+  - ONE Championship official goods (towels, mugs, bottles, sticker sets)
 
-#### 🏠 HOMEページ
-- **選択中のトレーナー**: 現在選択中のトレーナーとその貢献度を表示
-- **自分の記録**: 累計トレーニング回数、累計スコア、連続トレーニング日数などを表示
-- **獲得バッジ一覧**: 獲得したバッジを最大6個まで表示
-- **リアルタイムスコア**: トレーナーのスコアがリアルタイムで更新
+#### 🏠 HOME Page
+- **Selected Trainer**: Display currently selected trainer and contribution rate
+- **My Records**: Display total training sessions, total score, consecutive training days, etc.
+- **Earned Badges List**: Display up to 6 earned badges
+- **Real-time Scores**: Trainer scores update in real-time
 
-## 🛠️ 技術スタック
+## 🛠️ Tech Stack
 
-- **フロントエンド**: Next.js 14 (App Router), TypeScript, React
-- **スタイリング**: Tailwind CSS
-- **状態管理**: Zustand
-- **アニメーション**: Framer Motion
-- **通知**: React Hot Toast
-- **ブロックチェーン**: Sui (TypeScript SDK)
-- **ウォレット**: @mysten/wallet-kit（Wallet Standard準拠）
-- **Moveコントラクト**: Sui Move（contracts/ディレクトリ）
+- **Frontend**: Next.js 14 (App Router), TypeScript, React
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Animation**: Framer Motion
+- **Notifications**: React Hot Toast
+- **Blockchain**: Sui (TypeScript SDK)
+- **Wallet**: @mysten/wallet-kit (Wallet Standard compliant)
+- **Move Contracts**: Sui Move (contracts/ directory)
 
-## 📦 セットアップ手順
+## 📦 Setup Instructions
 
-### 1. 依存関係のインストール
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. 環境変数の設定
+### 2. Configure Environment Variables
 
-`.env.local`ファイルを作成して、以下の環境変数を設定：
+Create a `.env.local` file and set the following environment variables:
 
 ```bash
 # Sui Network Configuration
 NEXT_PUBLIC_SUI_NETWORK=devnet  # 'devnet' | 'testnet' | 'mainnet'
 
-# Sui Move Contract Package ID（デプロイ後に設定）
+# Sui Move Contract Package ID (set after deployment)
 NEXT_PUBLIC_SUI_PACKAGE_ID=
 ```
 
-### 3. 開発サーバーの起動
+### 3. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. ビルド
+### 4. Build
 
 ```bash
 npm run build
 ```
 
-### 5. 本番環境での起動
+### 5. Start Production Server
 
 ```bash
 npm start
 ```
 
-## 📁 プロジェクト構造
+## 📁 Project Structure
 
 ```
 ONE_FIT_HERO/
 ├── app/                    # Next.js App Router
-│   ├── layout.tsx         # ルートレイアウト（WalletProvider含む）
-│   ├── page.tsx           # HOME（Dashboard）画面
-│   ├── workout/           # ワークアウト画面
-│   ├── trainers/          # トレーナー選択画面
-│   ├── ranking/           # ランキング画面
-│   ├── rewards/           # バッジ・報酬画面
-│   ├── exchange/          # トークン交換画面
-│   └── globals.css        # グローバルスタイル
-├── components/            # Reactコンポーネント
-│   ├── AICoaching.tsx     # AIコーチング（カメラ機能）
+│   ├── layout.tsx         # Root layout (includes WalletProvider)
+│   ├── page.tsx           # HOME (Dashboard) page
+│   ├── workout/           # Workout page
+│   ├── trainers/          # Trainer selection page
+│   ├── ranking/           # Ranking page
+│   ├── rewards/           # Badge & rewards page
+│   ├── exchange/          # Token exchange page
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── AICoaching.tsx     # AI Coaching (camera feature)
 │   ├── WalletConnectButton.tsx
 │   ├── WalletSelector.tsx
 │   ├── WalletProvider.tsx
 │   ├── TrainerCard.tsx
-│   ├── WorkoutPanel.tsx   # ワークアウトパネル
-│   ├── WorkoutVideoPlayer.tsx  # 動画プレイヤー
+│   ├── WorkoutPanel.tsx   # Workout panel
+│   ├── WorkoutVideoPlayer.tsx  # Video player
 │   ├── RankingList.tsx
 │   ├── PrizeTicketCard.tsx
 │   ├── ExchangeMarketplace.tsx
 │   └── ...
-├── store/                 # Zustandストア
-│   └── useAppStore.ts     # アプリケーション状態管理
-├── lib/                   # ライブラリ・ユーティリティ
-│   └── sui.ts             # Sui Moveコントラクトとの連携
-├── types/                 # TypeScript型定義
+├── store/                 # Zustand store
+│   └── useAppStore.ts     # Application state management
+├── lib/                   # Libraries & utilities
+│   └── sui.ts             # Sui Move contract integration
+├── types/                 # TypeScript type definitions
 │   └── index.ts
-├── contracts/             # Sui Moveコントラクト
+├── contracts/             # Sui Move contracts
 │   ├── sources/
 │   │   └── one_fit_hero.move
 │   └── Move.toml
-└── public/                # 静的ファイル
+└── public/                # Static files
     ├── logo.png
     └── ...
 ```
 
-## 🎯 主要画面の説明
+## 🎯 Main Pages
 
-### 🏠 HOME（Dashboard）
-- **選択中のトレーナー**: 現在選択中のトレーナー情報、貢献度、ランキング順位を表示
-- **自分の記録**: 
-  - 累計トレーニング回数（直近7日間のトレーニング回数も表示）
-  - 累計スコア（あなたのスコア + トレーナーのスコア）
-  - 週次ランキング順位
-  - 累計バッジ数（REWARDSバッジ）
-  - 連続トレーニング日数（現在の連続日数と最長記録）
-- **獲得バッジ一覧**: 獲得したバッジを最大6個まで表示
-- **クイックアクション**: ワークアウト開始、ランキング確認、トークン交換へのリンク
+### 🏠 HOME (Dashboard)
+- **Selected Trainer**: Display currently selected trainer information, contribution rate, and ranking position
+- **My Records**: 
+  - Total training sessions (including training count for the last 7 days)
+  - Total score (Your score + Trainer's score)
+  - Weekly ranking position
+  - Total badge count (REWARDS badges)
+  - Consecutive training days (current consecutive days and longest record)
+- **Earned Badges List**: Display up to 6 earned badges
+- **Quick Actions**: Links to start workout, view ranking, and exchange tokens
 
-### 🏋️ WORKOUT画面
-- **選択中のトレーナー表示**: トレーナー情報と画像を表示
-- **難易度選択**: 初級・中級・上級から選択（カロリー消費率が異なる）
-- **トレーニング動画**: 選択したトレーナーの動画を見ながらコピートレーニング
-- **AIコーチング**: 
-  - カメラで自分の動きを記録
-  - リアルタイムでAIコーチングメッセージを表示
-  - 再現度をリアルタイムで表示（100%の場合、時間分のカロリーをそのまま付与）
-- **スコア表示**: リアルタイムで消費カロリーと獲得トークンを表示
-- **トレーニング終了ダイアログ**: カスタムモーダルでトレーニング終了を確認
+### 🏋️ WORKOUT Page
+- **Selected Trainer Display**: Display trainer information and image
+- **Difficulty Selection**: Select from Beginner, Intermediate, or Advanced (different calorie burn rates)
+- **Training Video**: Copy train while watching selected trainer's video
+- **AI Coaching**: 
+  - Record your movements with a camera
+  - Display real-time AI coaching messages
+  - Display real-time reproduction rate (100% grants full time-based calories)
+- **Score Display**: Display real-time calorie consumption and earned tokens
+- **End Workout Dialog**: Custom modal to confirm workout completion
 
-### 👥 TRAINERS画面
-- **トレーナー一覧**: 利用可能なトレーナーを表示（Rodtang、Angela Lee、Chatri Sityodtong）
-- **トレーナーカード**: 
-  - トレーナー画像
-  - ステータス（パワー、スピリット、柔軟性）
-  - あなたの貢献スコア
-  - トレーナーの累積スコア
-  - ランキング順位
-- **トレーナー選択**: カードをクリックしてトレーナーを選択
+### 👥 TRAINERS Page
+- **Trainer List**: Display available trainers (Rodtang, Angela Lee, Chatri Sityodtong)
+- **Trainer Card**: 
+  - Trainer image
+  - Stats (Power, Spirit, Flexibility)
+  - Your contribution score
+  - Trainer's cumulative score
+  - Ranking position
+- **Trainer Selection**: Click card to select a trainer
 
-### 📊 RANKING画面
-- **ユーザーランキング**: 
-  - 週次ランキングでユーザーの順位を表示
-  - 各ユーザーの総スコアとトレーニング回数を表示
-- **リアルタイムランキング**: 
-  - トレーナー別のリアルタイムスコアランキング
-  - 各トレーナーの貢献スコアをバーで表示
-  - トレーナー画像とランキング順位を表示
+### 📊 RANKING Page
+- **User Ranking**: 
+  - Display user ranking positions in weekly rankings
+  - Display each user's total score and training count
+- **Real-time Ranking**: 
+  - Real-time score rankings by trainer
+  - Display each trainer's contribution score as a bar
+  - Display trainer images and ranking positions
 
-### 🏅 REWARDS画面
-- **バッジ一覧**: 様々な条件で獲得できるバッジを表示
-- **バッジカテゴリ**:
-  - 連続トレーニング日数バッジ
-  - 週間ランキングバッジ
-  - 累計トレーニング回数バッジ
-  - 累計スコアバッジ
-  - 貢献度バッジ
-- **バッジ詳細**: 
-  - レアリティ別のカラーリング
-  - 進捗バー表示（達成条件がある場合）
-  - 獲得済み/未獲得の表示
+### 🏅 REWARDS Page
+- **Badge List**: Display various badges that can be earned through different conditions
+- **Badge Categories**:
+  - Consecutive training days badges
+  - Weekly ranking badges
+  - Total workout count badges
+  - Total score badges
+  - Contribution badges
+- **Badge Details**: 
+  - Color-coding by rarity
+  - Progress bar display (when achievement conditions exist)
+  - Display earned/unearned status
 
-### 🎫 EXCHANGE画面
-- **トークン残高**: 現在所持しているトークン数を表示
-- **抽選券**: 
-  - ONE Championship関連の抽選券を応募
-  - 応募にはトークンが必要
-- **商品**: 
-  - スポンサー割引券（ジム、サプリメント、スポーツウェアなど）
-  - ONE Championship公式グッズ
-  - 購入にはトークンが必要
-- **交換履歴**: 過去の交換履歴を確認
+### 🎫 EXCHANGE Page
+- **Token Balance**: Display current token holdings
+- **Lottery Tickets**: 
+  - Apply for ONE Championship-related lottery tickets
+  - Tokens required for application
+- **Goods**: 
+  - Sponsor discount coupons (gyms, supplements, sportswear, etc.)
+  - ONE Championship official goods
+  - Tokens required for purchase
+- **Exchange History**: View past exchange history
 
-## 🔗 ウォレット接続について
+## 🔗 Wallet Connection
 
-このアプリは実際のSui Walletに接続できます。
+This app can connect to actual Sui wallets.
 
-### 必要な準備
+### Prerequisites
 
-1. **Suiウォレットのインストール**
-   - **Sui Wallet**: [Chrome拡張機能](https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil)
-   - **Slush Wallet**: [公式サイト](https://slushwallet.com)からインストール
-   - その他のWallet Standard準拠のSuiウォレットも自動検出されます
+1. **Install Sui Wallet**
+   - **Sui Wallet**: [Chrome Extension](https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil)
+   - **Slush Wallet**: Install from [official website](https://slushwallet.com)
+   - Other Wallet Standard-compliant Sui wallets are automatically detected
 
-2. **ウォレットのセットアップ**
-   - 選択したウォレットを開いてウォレットを作成またはインポート
-   - Devnet/Testnet/Mainnetのアカウントを準備
+2. **Setup Wallet**
+   - Open selected wallet and create or import a wallet
+   - Prepare Devnet/Testnet/Mainnet account
 
-### 使用方法
+### Usage
 
-1. アプリを起動
-2. 「ウォレット接続」ボタンをクリック
-3. ウォレット選択画面で使用するウォレットを選択
-4. ウォレット拡張機能で接続を承認
+1. Launch the app
+2. Click "Connect Wallet" button
+3. Select wallet from wallet selection screen
+4. Approve connection in wallet extension
 
-接続後、ウォレットアドレスが表示され、すべての機能が利用可能になります。
+After connection, your wallet address will be displayed and all features become available.
 
-### サポートされているウォレット
+### Supported Wallets
 
-- **Sui Wallet**: 公式Chrome拡張機能
-- **Slush Wallet**: 公式ウォレット
-- その他のWallet Standard準拠のSuiウォレット（自動検出）
+- **Sui Wallet**: Official Chrome extension
+- **Slush Wallet**: Official wallet
+- Other Wallet Standard-compliant Sui wallets (auto-detected)
 
-## 🎮 ゲームプレイの流れ
+## 🎮 Gameplay Flow
 
-1. **ウォレット接続**: Suiウォレットを接続
-2. **トレーナー選択**: TRAINERS画面でトレーナーを選択
-3. **ワークアウト開始**: WORKOUT画面で難易度を選択してトレーニングを開始
-4. **AIコーチング**: カメラで自分の動きを記録し、AIコーチングメッセージを受信
-5. **再現度判定**: AI判定による再現度に基づいてスコアとトークンを獲得
-6. **バッジ獲得**: 条件を満たすとバッジが自動的に付与される
-7. **ランキング確認**: 自分の順位とトレーナーのランキングを確認
-8. **トークン交換**: 獲得したトークンで抽選券や商品を購入
+1. **Connect Wallet**: Connect Sui wallet
+2. **Select Trainer**: Select trainer on TRAINERS page
+3. **Start Workout**: Select difficulty and start training on WORKOUT page
+4. **AI Coaching**: Record your movements with camera and receive AI coaching messages
+5. **Reproduction Rate Evaluation**: Earn scores and tokens based on AI-determined reproduction rate
+6. **Earn Badges**: Badges are automatically awarded when conditions are met
+7. **Check Ranking**: View your ranking position and trainer rankings
+8. **Exchange Tokens**: Use earned tokens to purchase lottery tickets or goods
 
-## 📚 Sui Moveコントラクト
+## 📚 Sui Move Contracts
 
-プロダクト用のMoveコントラクトは `contracts/` ディレクトリに用意されています。
+Move contracts for production are located in the `contracts/` directory.
 
-### 実装されているMove関数
+### Implemented Move Functions
 
 ```move
-// Trainer NFT関連
+// Trainer NFT related
 public entry fun mint_trainer_nft(ctx: &mut TxContext, trainer_id: u8, name: vector<u8>): Trainer
 public entry fun increase_trainer_stats(trainer: &mut Trainer, power: u64, spirit: u64, flexibility: u64, ctx: &TxContext)
 public entry fun update_trainer_scores(trainer: &mut Trainer, user_score: u64, trainer_score: u64, ctx: &TxContext)
 
-// Workout Badge (SBT)関連
+// Workout Badge (SBT) related
 public entry fun mint_workout_badge(difficulty: u8, user_score: u64, trainer_score: u64, ctx: &mut TxContext): WorkoutBadge
 
-// Token関連
+// Token related
 public entry fun init_token_balance(ctx: &mut TxContext): TokenBalance
 public entry fun add_tokens(balance: &mut TokenBalance, amount: u64, ctx: &TxContext)
 public entry fun spend_tokens(balance: &mut TokenBalance, amount: u64, ctx: &TxContext)
 
-// Prize Ticket関連
+// Prize Ticket related
 public entry fun mint_prize_ticket(week: vector<u8>, rank: u64, ctx: &mut TxContext): PrizeTicket
 
-// Exchange関連
+// Exchange related
 public entry fun exchange_item(balance: &mut TokenBalance, item_id: u8, item_type: u8, item_name: vector<u8>, token_cost: u64, ctx: &mut TxContext): ExchangeItem
 
-// 統合関数
+// Integrated function
 public entry fun complete_workout_session(trainer: &mut Trainer, balance: &mut TokenBalance, difficulty: u8, user_score: u64, trainer_score: u64, ctx: &mut TxContext)
 ```
 
-### コントラクトのデプロイ
+### Deploy Contract
 
-1. Moveコントラクトをビルド
+1. Build Move contract
    ```bash
    cd contracts
    sui move build
    ```
 
-2. コントラクトをデプロイ
+2. Deploy contract
    ```bash
    sui client publish --gas-budget 100000000
    ```
 
-3. パッケージIDを環境変数に設定
+3. Set package ID in environment variables
    ```bash
    # .env.local
    NEXT_PUBLIC_SUI_PACKAGE_ID=0x...
    ```
 
-詳細は `DEPLOY.md` を参照してください。
+## 🚀 Deployment
 
-## 🚀 デプロイ
+This app can be deployed to Vercel.
 
-このアプリはVercelにデプロイできます。
+### Deploy to Vercel
 
-### Vercelへのデプロイ
+1. Push to GitHub repository
+2. Create project on [Vercel](https://vercel.com)
+3. Set environment variables (`NEXT_PUBLIC_SUI_NETWORK`, `NEXT_PUBLIC_SUI_PACKAGE_ID`)
+4. Deploy
 
-1. GitHubリポジトリにプッシュ
-2. [Vercel](https://vercel.com)でプロジェクトを作成
-3. 環境変数を設定（`NEXT_PUBLIC_SUI_NETWORK`、`NEXT_PUBLIC_SUI_PACKAGE_ID`）
-4. デプロイ
+See `DEPLOY.md` for detailed instructions.
 
-詳細は `DEPLOY.md` を参照してください。
+## ⚙️ Current Implementation Status
 
-## ⚙️ 現在の実装状況
+### ✅ Implemented Features
 
-### ✅ 実装済み機能
+- ✅ Sui Wallet connection (Wallet Standard compliant)
+- ✅ Trainer selection system
+- ✅ Video training functionality
+- ✅ AI Coaching (camera feature, reproduction rate evaluation)
+- ✅ Calorie-based token earning system
+- ✅ Badge system (REWARDS page)
+- ✅ Ranking system (User ranking + Real-time ranking)
+- ✅ Token exchange system (EXCHANGE page)
+- ✅ Trainer contribution system
+- ✅ Sui Move contracts (contracts/ directory)
 
-- ✅ Sui Wallet接続（Wallet Standard準拠）
-- ✅ トレーナー選択システム
-- ✅ 動画トレーニング機能
-- ✅ AIコーチング（カメラ機能、再現度判定）
-- ✅ カロリーベースのトークン獲得システム
-- ✅ バッジシステム（REWARDSページ）
-- ✅ ランキングシステム（ユーザーランキング + リアルタイムランキング）
-- ✅ トークン交換システム（EXCHANGEページ）
-- ✅ トレーナー貢献度システム
-- ✅ Sui Moveコントラクト（contracts/ディレクトリ）
+### 📝 Mock Implementation (In Development)
 
-### 📝 モック実装（開発中）
+Currently, some features use mock data:
 
-現在、一部の機能はモックデータを使用しています：
+- **Rankings**: Uses mock data (planned integration with on-chain data)
+- **Badge Progress**: Uses mock data from HOME page
+- **AI Reproduction Rate Evaluation**: Currently returns 100% mock implementation (actual AI evaluation planned for future implementation)
 
-- **ランキング**: モックデータを使用（オンチェーンデータと結合予定）
-- **バッジ進捗**: HOMEページのモックデータを使用
-- **AI再現度判定**: 現在は常に100%を返すモック実装（実際のAI判定は今後の実装）
+### 🔄 On-chain Integration
 
-### 🔄 オンチェーン統合
+Functions implemented in `lib/sui.ts` integrate with actual Sui Move contracts. Once you deploy the contract and set the `NEXT_PUBLIC_SUI_PACKAGE_ID` environment variable, on-chain features become active.
 
-`lib/sui.ts`に実装されている関数が、実際のSui Moveコントラクトと連携します。コントラクトをデプロイし、`NEXT_PUBLIC_SUI_PACKAGE_ID`環境変数を設定すると、オンチェーン機能が有効になります。
+## 📝 Development Notes
 
-## 📝 開発メモ
+- This project is an MVP (Minimum Viable Product)
+- When using in actual production, strengthen security and error handling
+- Actual implementation of AI reproduction rate evaluation requires camera image analysis and pose estimation technology
 
-- このプロジェクトはMVP（Minimum Viable Product）です
-- 実際の本番環境で使用する場合は、セキュリティとエラーハンドリングを強化してください
-- AI再現度判定の実際の実装は、カメラ映像解析と姿勢推定技術を使用する必要があります
+## 📄 License
 
-## 📄 ライセンス
+This project is a prototype for hackathon purposes.
 
-このプロジェクトはハッカソン用のプロトタイプです。
+## 🙏 Acknowledgments
 
-## 🙏 謝辞
-
-- ONE Championship - トレーナーとして起用しているファイター
-- Sui Foundation - ブロックチェーンインフラストラクチャ
-- Wallet Standard - ウォレット接続標準
+- ONE Championship - Fighters featured as trainers
+- Sui Foundation - Blockchain infrastructure
+- Wallet Standard - Wallet connection standard
