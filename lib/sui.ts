@@ -98,7 +98,7 @@ export const suiService = {
   async mintTrainerNFT(
     trainerId: number,
     name: string,
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_IDが設定されていません。コントラクトをデプロイして、.env.localファイルにNEXT_PUBLIC_SUI_PACKAGE_IDを設定してください。');
@@ -124,7 +124,7 @@ export const suiService = {
     trainerObjectId: string,
     userScore: number,
     trainerScore: number,
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_ID is not set. Please set NEXT_PUBLIC_SUI_PACKAGE_ID environment variable.');
@@ -152,7 +152,7 @@ export const suiService = {
     power: number,
     spirit: number,
     flexibility: number,
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_ID is not set. Please set NEXT_PUBLIC_SUI_PACKAGE_ID environment variable.');
@@ -180,7 +180,7 @@ export const suiService = {
     difficulty: number,
     userScore: number,
     trainerScore: number,
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_ID is not set. Please set NEXT_PUBLIC_SUI_PACKAGE_ID environment variable.');
@@ -209,7 +209,7 @@ export const suiService = {
     difficulty: number,
     userScore: number,
     trainerScore: number,
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_ID is not set. Please set NEXT_PUBLIC_SUI_PACKAGE_ID environment variable.');
@@ -361,7 +361,7 @@ export const suiService = {
    * TokenBalanceを初期化
    */
   async initTokenBalance(
-    signAndExecuteTransactionBlock: (tx: TransactionBlock) => Promise<any>
+    signAndExecuteTransactionBlock: (tx: TransactionBlock | any) => Promise<any>
   ): Promise<string> {
     if (!PACKAGE_ID) {
       throw new Error('PACKAGE_ID is not set. Please set NEXT_PUBLIC_SUI_PACKAGE_ID environment variable.');

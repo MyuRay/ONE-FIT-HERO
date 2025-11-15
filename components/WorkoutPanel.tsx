@@ -150,7 +150,7 @@ export function WorkoutPanel() {
 
         toast.success('ブロックチェーンに保存しました！', { icon: '⛓️', duration: 3000 });
       } else {
-        toast.info('オンチェーン保存をスキップ（NFT未取得または未設定）', { icon: 'ℹ️', duration: 3000 });
+        toast('オンチェーン保存をスキップ（NFT未取得または未設定）', { icon: 'ℹ️', duration: 3000 });
       }
     } catch (error: any) {
       toast.error(`オンチェーン保存に失敗しました: ${error?.message ?? 'Unknown error'}`);

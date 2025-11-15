@@ -28,6 +28,8 @@ interface AppStore extends AppState {
   completeWorkout: () => void;
   getTodayBadge: () => WorkoutBadge | null;
   getTotalBadges: () => number;
+  checkAchievementBadges: () => void;
+  checkBadgeCondition: (badgeId: string) => boolean;
   
   // ランキング関連
   updateRankings: () => void;
@@ -509,9 +511,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
     
     if (badgeId === 'badge-master') {
       const dailyBadges = badges.filter((badge) => badge.type === 'daily' || !badge.type);
-      return condition.condition(dailyBadges);
+      // badge-masterのconditionは1つの引数のみを受け取る
+      return (condition.condition as (badges: WorkoutBadge[]) => boolean)(dailyBadges);
     } else if (badgeId === 'badge-champion') {
-      return condition.condition(badges, userRank);
+      // badge-championのconditionは2つの引数を受け取る
+      return (condition.condition as (badges: WorkoutBadge[], userRank: number | null) => boolean)(badges, userRank);
     }
     
     return false;
