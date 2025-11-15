@@ -649,31 +649,31 @@ export const useAppStore = create<AppStore>((set, get) => ({
     // Calories burned = Tokens earned
     const tokensEarned = caloriesBurned;
     
-    // Trainerのスコアを更新
-    // userScore（消費カロリー）も累積に加算
-    // trainerScore（増分）を累積スコアに加算
+    // Update trainer scores
+    // Add userScore (calories burned) to cumulative total
+    // Add trainerScore (increment) to cumulative score
     const updatedTrainers = trainers.map((trainer) => {
       if (trainer.id === trainerId) {
         return {
           ...trainer,
-          userScore: trainer.userScore + caloriesBurned, // 消費カロリーを累積
-          trainerScore: trainer.trainerScore + trainerScoreIncrement, // 増分を累積スコアに加算
+          userScore: trainer.userScore + caloriesBurned, // Accumulate calories burned
+          trainerScore: trainer.trainerScore + trainerScoreIncrement, // Add increment to cumulative score
         };
       }
       return trainer;
     });
     
-    // トレーニングセッションを記録
+    // Record training session
     const session: WorkoutSession = {
       id: `session-${Date.now()}`,
       address: address || DEFAULT_USER_ADDRESS,
       trainerId,
       difficulty,
-      userScore: caloriesBurned, // 消費カロリー
-      trainerScore: trainerScoreIncrement, // トレーナースコアの増分
+      userScore: caloriesBurned, // Calories burned
+      trainerScore: trainerScoreIncrement, // Trainer score increment
       tokensEarned, // Calories burned = Tokens earned
-      caloriesBurned, // 消費カロリー（kcal）
-      workoutDuration: workoutDurationMinutes, // トレーニング時間（分）
+      caloriesBurned, // Calories burned (kcal)
+      workoutDuration: workoutDurationMinutes, // Training duration (minutes)
       timestamp: Date.now(),
       date: today,
     };
