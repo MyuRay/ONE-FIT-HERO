@@ -710,7 +710,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     get().checkAchievementBadges();
   },
   
-  // トークン関連
+  // Token related
   getTokenAmount: () => {
     return get().tokens.amount;
   },
