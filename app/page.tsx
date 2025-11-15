@@ -394,12 +394,180 @@ export default function Home() {
       {/* メインコンテンツ */}
       <main className="container mx-auto px-4 py-8">
         {!address ? (
-          <div className="text-center py-20">
-            <h2 className="text-3xl font-bold mb-4">ウォレットを接続してください</h2>
-            <p className="text-gray-400 mb-8">
-              Suiウォレットを接続して、トレーニングを始めましょう！
-            </p>
-            <WalletConnectButton />
+          <div className="space-y-8 py-8">
+            {/* ゲーム性の説明セクション */}
+            <div className="max-w-4xl mx-auto space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-yellow-400 bg-clip-text text-transparent">
+                  ONE FIT HEROへようこそ！
+                </h2>
+                <p className="text-xl text-gray-300 mb-2">
+                  ONE Championshipのファイターと一緒にトレーニングしよう
+                </p>
+              </div>
+
+              {/* ゲーム性の説明カード */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* トレーニングシステム */}
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-primary/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl">🏋️</span>
+                    <h3 className="text-2xl font-bold text-primary">トレーニングシステム</h3>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-yellow-400">•</span>
+                      <span>ONE Championshipファイターの動画を見ながらコピートレーニング</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-yellow-400">•</span>
+                      <span>AIコーチングでリアルタイムフィードバック</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-yellow-400">•</span>
+                      <span>再現度100%で時間分のカロリーをそのままトークン獲得</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-yellow-400">•</span>
+                      <span>難易度別カロリー消費（初級8/分、中級12/分、上級18/分）</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* トレーナーシステム */}
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-yellow-400/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl">👤</span>
+                    <h3 className="text-2xl font-bold text-yellow-400">トレーナーシステム</h3>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span>Rodtang、Angela Lee、Chatriなどから選択</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span>トレーナーNFTとして所有・育成</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span>貢献度に応じてスコアが反映</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span>リアルタイムランキングで競争</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* バッジ・報酬システム */}
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-purple-500/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl">🏅</span>
+                    <h3 className="text-2xl font-bold text-purple-400">バッジ・報酬システム</h3>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400">•</span>
+                      <span>連続トレーニング日数でバッジ獲得</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400">•</span>
+                      <span>ランキング上位入賞で特別バッジ</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400">•</span>
+                      <span>累計スコアや回数で実績バッジ</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-400">•</span>
+                      <span>Common/Rare/Epic/Legendaryの4段階レアリティ</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* トークン交換システム */}
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border-2 border-green-500/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl">🎫</span>
+                    <h3 className="text-2xl font-bold text-green-400">トークン交換システム</h3>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400">•</span>
+                      <span>獲得トークンで抽選券を購入</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400">•</span>
+                      <span>ONE Championship観戦チケット抽選</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400">•</span>
+                      <span>スポンサー割引券を購入</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400">•</span>
+                      <span>公式グッズ抽選に参加</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* ゲームの流れ */}
+              <div className="bg-gradient-to-r from-gray-800 via-gray-800 to-gray-900 rounded-lg p-8 border-2 border-gray-700">
+                <h3 className="text-2xl font-bold mb-6 text-center">🎮 ゲームの流れ</h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3 border-2 border-primary">
+                      <span className="text-2xl">1️⃣</span>
+                    </div>
+                    <h4 className="font-bold text-primary mb-2">ウォレット接続</h4>
+                    <p className="text-sm text-gray-400">Suiウォレットを接続</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-yellow-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-yellow-400">
+                      <span className="text-2xl">2️⃣</span>
+                    </div>
+                    <h4 className="font-bold text-yellow-400 mb-2">トレーナー選択</h4>
+                    <p className="text-sm text-gray-400">推しファイターを選択</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-purple-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-purple-400">
+                      <span className="text-2xl">3️⃣</span>
+                    </div>
+                    <h4 className="font-bold text-purple-400 mb-2">トレーニング開始</h4>
+                    <p className="text-sm text-gray-400">AIコーチングで鍛える</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-green-400/20 flex items-center justify-center mx-auto mb-3 border-2 border-green-400">
+                      <span className="text-2xl">4️⃣</span>
+                    </div>
+                    <h4 className="font-bold text-green-400 mb-2">トークン交換</h4>
+                    <p className="text-sm text-gray-400">抽選券や商品を購入</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* ウォレット接続ボタン */}
+              <div className="text-center py-8 bg-gradient-to-r from-primary/10 via-yellow-400/10 to-primary/10 rounded-lg border-2 border-primary/30">
+                <h3 className="text-2xl font-bold mb-4">🚀 さあ、始めましょう！</h3>
+                <p className="text-gray-300 mb-6">
+                  Suiウォレットを接続して、ONE FIT HEROの世界へ！
+                </p>
+                <WalletConnectButton />
+                <p className="text-sm text-gray-500 mt-4">
+                  ウォレットをお持ちでない場合: 
+                  <a 
+                    href="https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline ml-1"
+                  >
+                    Sui Walletをインストール
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="space-y-8">
