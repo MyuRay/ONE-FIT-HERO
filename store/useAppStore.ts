@@ -528,7 +528,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     
     // Check each condition
     Object.keys(badgeConditions).forEach((badgeId) => {
-      // 既に取得済みかチェック
+      // Check if already earned
       const alreadyHave = badges.some(
         (badge) => badge.achievementId === badgeId && badge.type === 'achievement'
       );
