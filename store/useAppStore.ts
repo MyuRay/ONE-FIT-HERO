@@ -678,7 +678,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       date: today,
     };
     
-    // 今日のバッジを追加（まだない場合）
+    // Add today's badge (if not already exists)
     const todayBadge = badges.find((badge) => badge.date === today && badge.type === 'daily');
     if (!todayBadge) {
       const newBadge: WorkoutBadge = {
