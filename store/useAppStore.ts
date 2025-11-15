@@ -460,7 +460,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     const { badges, selectedTrainerId } = get();
     const today = new Date().toISOString().split('T')[0];
     
-    // 今日のバッジが既に存在するかチェック
+    // Check if today's badge already exists
     const todayBadge = badges.find((badge) => badge.date === today && badge.type === 'daily');
     
     if (!todayBadge) {
@@ -476,12 +476,12 @@ export const useAppStore = create<AppStore>((set, get) => ({
         todayBadgeCompleted: true,
       });
       
-      // Trainerのステータスを増加
+      // Increase trainer stats
       if (selectedTrainerId) {
         get().increaseTrainerStats(selectedTrainerId);
       }
       
-      // 条件達成バッジをチェック
+      // Check achievement badges
       get().checkAchievementBadges();
     }
   },
@@ -494,7 +494,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
   
   getTotalBadges: () => {
     const { badges } = get();
-    // 日次バッジのみをカウント
+    // Count only daily badges
     return badges.filter((badge) => badge.type === 'daily' || !badge.type).length;
   },
   
@@ -511,22 +511,22 @@ export const useAppStore = create<AppStore>((set, get) => ({
     
     if (badgeId === 'badge-master') {
       const dailyBadges = badges.filter((badge) => badge.type === 'daily' || !badge.type);
-      // badge-masterのconditionは1つの引数のみを受け取る
+      // badge-master's condition only takes one argument
       return (condition.condition as (badges: WorkoutBadge[]) => boolean)(dailyBadges);
     } else if (badgeId === 'badge-champion') {
-      // badge-championのconditionは2つの引数を受け取る
+      // badge-champion's condition takes two arguments
       return (condition.condition as (badges: WorkoutBadge[], userRank: number | null) => boolean)(badges, userRank);
     }
     
     return false;
   },
   
-  // 条件達成バッジをチェックして付与
+  // Check and award achievement badges
   checkAchievementBadges: () => {
     const { badges } = get();
     const newAchievementBadges: WorkoutBadge[] = [];
     
-    // 各条件をチェック
+    // Check each condition
     Object.keys(badgeConditions).forEach((badgeId) => {
       // 既に取得済みかチェック
       const alreadyHave = badges.some(
